@@ -17,6 +17,7 @@ Plug 'liuchengxu/space-vim-dark'
 Plug 'tpope/vim-endwise'
 call plug#end()
 
+set shortmess=I
 let mapleader = ","
 set backupcopy=yes
 set hidden
