@@ -15,7 +15,6 @@ Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sleuth'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'tpope/vim-endwise'
-
 call plug#end()
 
 let mapleader = ","
