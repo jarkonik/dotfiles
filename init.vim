@@ -68,7 +68,7 @@ noremap <Left> <NOP>
 noremap <Right> <NOP>
 nnoremap Q <nop>
 nnoremap q <nop>
-map <C-m> :NERDTreeToggle<CR>
+map <C-t> :NERDTreeToggle<CR>
 nnoremap <Tab> :bnext<CR>
 
 augroup nerdtreebindings
