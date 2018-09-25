@@ -1,5 +1,4 @@
 call plug#begin('~/.vim/plugged')
-Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree'
 Plug 'xuyuanp/nerdtree-git-plugin'
 Plug 'raimondi/delimitmate'
@@ -7,22 +6,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-repeat'
-Plug 'w0rp/ale'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'reedes/vim-pencil'
 Plug 'tpope/vim-surround'
 Plug 'qpkorr/vim-bufkill'
-Plug 'shougo/deoplete.nvim'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sleuth'
-
-" COLORS
 Plug 'liuchengxu/space-vim-dark'
-Plug 'tlhr/anderson.vim'
-
-" RUBY
 Plug 'tpope/vim-endwise'
 
 call plug#end()
@@ -55,22 +46,7 @@ set hlsearch
 syntax enable
 
 set termguicolors
-colorscheme anderson
-
-hi Comment cterm=italic
-hi Normal     ctermbg=NONE guibg=NONE
-hi LineNr     ctermbg=NONE guibg=NONE
-hi SignColumn ctermbg=NONE guibg=NONE
-hi NonText    ctermbg=NONE guibg=NONE
-
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? 'OK' : printf('%dW %dE', all_non_errors, all_errors)
-endfunction
-
-set statusline=%f\ %y\ %h%w%m%r\ %=%(%l,%c%V\ %=\ %P%)\ %{LinterStatus()}
+colorscheme space-vim-dark
 
 augroup commands
   autocmd!
@@ -81,8 +57,6 @@ augroup commands
   autocmd FileType qf set nobuflisted
 augroup END
 
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nnoremap <silent> <C-f> :GGrep<cr>
 nnoremap <silent> <C-p> :GFiles<cr>
 nnoremap <silent> <C-n> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
@@ -110,10 +84,5 @@ augroup END
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
 
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_linters = {'go': ['go build', 'gometalinter']}
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeShowHidden = 1
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#file#enable_buffer_path = 1
