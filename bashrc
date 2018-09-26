@@ -1,4 +1,4 @@
-export PS1=" \e[33m\w\e[35m:\e[0m"
+export PS1="\w:"
 
 export PATH="$HOME/neovim/bin:~/bin:$PATH"
 alias vim=nvim
