@@ -46,7 +46,10 @@ set hlsearch
 syntax enable
 
 set termguicolors
-colorscheme space-vim-dark
+
+if !exists('g:not_finish_vimplug')
+  colorscheme space-vim-dark
+endif
 
 augroup commands
   autocmd!
