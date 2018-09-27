@@ -47,9 +47,7 @@ syntax enable
 
 set termguicolors
 
-if !exists('g:not_finish_vimplug')
-  colorscheme space-vim-dark
-endif
+colorscheme space-vim-dark
 
 augroup commands
   autocmd!
