@@ -45,6 +45,7 @@ set incsearch
 set hlsearch
 syntax enable
 
+let g:dracula_italic = 0
 colorscheme dracula
 
 augroup commands
