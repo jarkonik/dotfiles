@@ -14,6 +14,7 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
+Plug 'dracula/vim'
 call plug#end()
 
 set shortmess=I
@@ -43,6 +44,8 @@ set background=dark
 set incsearch
 set hlsearch
 syntax enable
+
+colorscheme dracula
 
 augroup commands
   autocmd!
