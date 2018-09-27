@@ -13,8 +13,8 @@ Plug 'tpope/vim-surround'
 Plug 'qpkorr/vim-bufkill'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sleuth'
-Plug 'liuchengxu/space-vim-dark'
 Plug 'tpope/vim-endwise'
+Plug 'alessandroyorba/alduin'
 call plug#end()
 
 set shortmess=I
@@ -47,7 +47,7 @@ syntax enable
 
 set termguicolors
 
-colorscheme space-vim-dark
+colorscheme alduin
 
 augroup commands
   autocmd!
