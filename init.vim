@@ -14,7 +14,11 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
+Plug 'dracula/vim'
 call plug#end()
+
+set termguicolors
+colorscheme dracula
 
 set shortmess=I
 let mapleader = ","

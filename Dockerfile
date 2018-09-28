@@ -22,4 +22,4 @@ COPY bashrc .bashrc
 COPY inputrc .inputrc
 COPY tmux.conf .tmux.conf
 
-ENTRYPOINT [ "tmux", "-u" ]
+ENTRYPOINT [ "tmux", "-u", "-2" ]
