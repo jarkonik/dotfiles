@@ -1,5 +1,7 @@
 FROM alpine:latest
 
+ENV TERM=xterm-256color
+
 RUN apk add \
     tmux \
     neovim \
@@ -22,4 +24,4 @@ COPY bashrc .bashrc
 COPY inputrc .inputrc
 COPY tmux.conf .tmux.conf
 
-ENTRYPOINT [ "tmux", "-u", "-2" ]
+ENTRYPOINT [ "tmux", "-u" ]
