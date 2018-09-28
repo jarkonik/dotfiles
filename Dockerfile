@@ -16,7 +16,7 @@ RUN apk add \
 
 WORKDIR /root
 COPY init.vim .config/nvim/
-RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 
+RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 RUN nvim '+PlugInstall --sync' +qall
 COPY bashrc .bashrc
 COPY inputrc .inputrc
