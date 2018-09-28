@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ENV TERM=xterm-256color
+ENV TERM=screen-256color
 
 RUN apk add \
     tmux \
