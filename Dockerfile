@@ -22,4 +22,7 @@ COPY bashrc .bashrc
 COPY inputrc .inputrc
 COPY tmux.conf .tmux.conf
 
+RUN git config --global user.email "konikjar@gmail.com"
+RUN git config --global user.name "Jaroslaw Konik"
+
 ENTRYPOINT [ "tmux", "-u", "-2" ]
