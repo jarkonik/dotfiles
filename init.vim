@@ -18,6 +18,8 @@ Plug 'dracula/vim'
 call plug#end()
 
 set termguicolors
+
+let g:dracula_italic = 0
 colorscheme dracula
 
 set shortmess=I
