@@ -25,6 +25,8 @@ colorscheme dracula
 
 set shortmess=I
 let mapleader = ","
+set shortmess=a
+set cmdheight=2
 set backupcopy=yes
 set hidden
 set confirm
