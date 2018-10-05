@@ -14,13 +14,9 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
-Plug 'dracula/vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/AutoComplPop'
 call plug#end()
-
-let g:dracula_italic = 0
-silent! colorscheme dracula
 
 set shortmess=I
 let mapleader = ","
