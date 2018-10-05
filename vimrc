@@ -20,7 +20,7 @@ Plug 'vim-scripts/AutoComplPop'
 call plug#end()
 
 let g:dracula_italic = 0
-colorscheme dracula
+silent! colorscheme dracula
 
 set shortmess=I
 let mapleader = ","
