@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # TODO: Set vim as system and git etc. editor
-# TODO: Change prezto loop so it works in sh
 
 settings=false
 install=false
@@ -13,30 +12,22 @@ while getopts 'is' flag; do
 done
 
 if [ "$install" = true ]; then
-  sudo apt-get update
-  sudo apt-get -y install tmux neovim
+  sudo apt-get update &&
+  sudo apt-get -y install tmux vim
 else
   echo "Skipping install"
 fi &&
 
 if [ "$settings" = true ]; then
-  nvim +'PlugUpdate --sync' +'PlugClean' +'UpdateRemotePlugins' +qall &&
-  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
-
-  rm -rf ~/liquidprompt
-  git clone https://github.com/nojhan/liquidprompt.git ~/liquidprompt
-
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
+  vim '+PlugInstall --sync' +qall &&
   rm -rf ~/.bashrc &&
-  rm -rf ~/.profile &&
   rm -rf ~/.inputrc &&
   rm -rf ~/.tmux.conf &&
-  mkdir -p ~/.config/nvim &&
-  rm -rf ~/.config/nvim/init.vim &&
-
+  rm -rf ~/.vimrc &&
   ln -s "$(pwd)/tmux.conf" ~/.tmux.conf &&
   ln -s "$(pwd)/bashrc" ~/.bashrc &&
-  ln -s "$(pwd)/bashrc" ~/.profile &&
-  ln -s "$(pwd)/init.vim" ~/.config/nvim/init.vim
+  ln -s "$(pwd)/vimrc" ~/.vimrc &&
   ln -s "$(pwd)/inputrc" ~/.inputrc
 else
   echo "Skipping settings"

@@ -2,7 +2,7 @@ FROM alpine:latest
 
 RUN apk add \
     tmux \
-    neovim \
+    vim \
     curl \
     git \
     bash \
@@ -15,12 +15,14 @@ RUN apk add \
     binutils
 
 WORKDIR /root
-COPY init.vim .config/nvim/
-RUN curl -fLo /root/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-RUN nvim '+PlugInstall --sync' +qall
+
 COPY bashrc .bashrc
 COPY inputrc .inputrc
 COPY tmux.conf .tmux.conf
+COPY vimrc .vimrc
+
+RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN vim '+PlugInstall --sync' +qall
 
 RUN git config --global user.email "konikjar@gmail.com"
 RUN git config --global user.name "Jaroslaw Konik"
