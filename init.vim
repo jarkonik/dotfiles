@@ -16,6 +16,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
 Plug 'dracula/vim'
 Plug 'kchmck/vim-coffee-script'
+Plug 'vim-scripts/AutoComplPop'
 call plug#end()
 
 set termguicolors
