@@ -48,6 +48,8 @@ set incsearch
 set hlsearch
 syntax enable
 
+hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
 augroup commands
   autocmd!
   autocmd BufNewFile,BufRead *.glsl setfiletype glsl
