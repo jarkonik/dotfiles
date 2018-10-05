@@ -19,8 +19,6 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/AutoComplPop'
 call plug#end()
 
-set termguicolors
-
 let g:dracula_italic = 0
 colorscheme dracula
 
