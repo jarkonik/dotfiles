@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build . -t dotfiles &&
+docker build $(dirname "$0") -t dotfiles &&
 winpty docker run -v /$(PWD):/mnt --rm -it dotfiles
