@@ -87,8 +87,3 @@ command! -bang -nargs=* GGrep
 let g:NERDTreeChDirMode = 2
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeDirArrowExpandable = '+'
-
-let &t_ti.="\e[1 q"
-let &t_SI.="\e[5 q"
-let &t_EI.="\e[1 q"
-let &t_te.="\e[0 q"
