@@ -42,7 +42,6 @@ set listchars=tab:>-
 set tw=80
 set tags=./tags;
 set completeopt-=preview
-set cursorline
 set background=dark
 set incsearch
 set hlsearch
