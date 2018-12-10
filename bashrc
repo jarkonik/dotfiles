@@ -7,6 +7,8 @@ bind TAB:menu-complete
 bind "set show-all-if-ambiguous on"
 bind "set menu-complete-display-prefix on"
 
+export VISUAL=vim
+export EDITOR="$VISUAL"
 export TERM=xterm-256color
 
 [[ -s "/usr/local/rvm/scripts/rvm" ]] && source /usr/local/rvm/scripts/rvm
