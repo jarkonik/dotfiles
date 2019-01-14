@@ -19,4 +19,6 @@ RUN /root/dotfiles/install.sh
 
 WORKDIR /root
 
+EXPOSE 8000
+
 ENTRYPOINT [ "tmux", "-u", "-2" ]
