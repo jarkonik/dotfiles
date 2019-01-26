@@ -16,6 +16,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/AutoComplPop'
+Plug 'drtom/fsharp-vim'
 call plug#end()
 
 set shortmess=I
@@ -79,6 +80,8 @@ augroup nerdtreebindings
   autocmd FileType nerdtree map <buffer> <leader>x <NOP>
   autocmd FileType nerdtree nnoremap <buffer> <Tab> <NOP>
 augroup END
+
+autocmd FileType fsharp set fo=croql
 
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
