@@ -11,4 +11,6 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 export TERM=xterm-256color
 
+alias dotnet=dotnet.exe
+
 [[ -s "/usr/local/rvm/scripts/rvm" ]] && source /usr/local/rvm/scripts/rvm
