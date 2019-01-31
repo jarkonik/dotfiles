@@ -16,7 +16,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/AutoComplPop'
-Plug 'drtom/fsharp-vim'
 call plug#end()
 
 set shortmess=I
