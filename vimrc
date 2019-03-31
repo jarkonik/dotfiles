@@ -80,7 +80,7 @@ augroup nerdtreebindings
   autocmd FileType nerdtree nnoremap <buffer> <Tab> <NOP>
 augroup END
 
-autocmd FileType fsharp set fo=croql iskeyword=@,48-57,_,192-255
+autocmd FileType forth set fo=croql iskeyword=@,48-57,_,192-255
 
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
