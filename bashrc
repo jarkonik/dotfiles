@@ -1,5 +1,3 @@
-export PS1="\[\e[32m\]\W\[\e[m\] "
-
 bind TAB:menu-complete
 bind "set show-all-if-ambiguous on"
 bind "set menu-complete-display-prefix on"
