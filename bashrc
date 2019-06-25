@@ -8,6 +8,4 @@ export TERM=xterm-256color
 
 alias start='cmd.exe /c start'
 
-[[ -s "/usr/local/rvm/scripts/rvm" ]] && source /usr/local/rvm/scripts/rvm
-
 export DISPLAY=localhost:0.0
