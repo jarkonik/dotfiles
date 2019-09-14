@@ -16,6 +16,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/AutoComplPop'
+Plug 'dracula/vim'
 call plug#end()
 
 set shortmess=I
@@ -45,7 +46,8 @@ set completeopt-=preview
 set background=dark
 set incsearch
 set hlsearch
-syntax enable
+syntax on
+color dracula
 
 augroup commands
   autocmd!
