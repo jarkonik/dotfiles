@@ -8,7 +8,7 @@ rm -rf ~/.tmux.conf &&
 rm -rf ~/.vimrc &&
 
 ln -s "$(pwd)/tmux.conf" ~/.tmux.conf &&
-ln -s "$(pwd)/bashrc" ~/.bashrc &&
+ln -s "$(pwd)/bashrc" ~/.profile &&
 ln -s "$(pwd)/vimrc" ~/.vimrc &&
 ln -s "$(pwd)/inputrc" ~/.inputrc &&
 
@@ -17,5 +17,7 @@ vim '+PlugInstall --sync' +qall &&
 
 git config --global user.email "konikjar@gmail.com" &&
 git config --global user.name "Jaroslaw Konik"
+
+source ~/.profile
 
 echo "DONE!"
