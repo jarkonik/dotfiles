@@ -18,6 +18,4 @@ vim '+PlugInstall --sync' +qall &&
 git config --global user.email "konikjar@gmail.com" &&
 git config --global user.name "Jaroslaw Konik"
 
-source ~/.profile
-
 echo "DONE!"
