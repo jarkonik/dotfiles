@@ -1,5 +1,6 @@
 if [[ $- == *i* ]]
 then
+  export PS1="\[\e[32m\]\W\[\e[m\]\\$ "
   bind TAB:menu-complete
   bind "set show-all-if-ambiguous on"
   bind "set menu-complete-display-prefix on"
@@ -27,4 +28,5 @@ else
     fi
 fi
 unset __conda_setup
-# <<< conda initialize <<<
+
+export DOCKER_HOST='tcp://0.0.0.0:2375'
