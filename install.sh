@@ -6,6 +6,7 @@ rm -rf ~/.bashrc &&
 rm -rf ~/.inputrc &&
 rm -rf ~/.tmux.conf &&
 rm -rf ~/.vimrc &&
+rm -rf ~/.profile &&
 
 ln -s "$(pwd)/tmux.conf" ~/.tmux.conf &&
 ln -s "$(pwd)/bashrc" ~/.profile &&
