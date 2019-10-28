@@ -2,7 +2,6 @@
 
 cd "$(dirname "$0")"
 
-rm -rf ~/.bashrc &&
 rm -rf ~/.inputrc &&
 rm -rf ~/.tmux.conf &&
 rm -rf ~/.vimrc &&
@@ -19,6 +18,6 @@ vim '+PlugInstall --sync' +qall &&
 git config --global user.email "konikjar@gmail.com" &&
 git config --global user.name "Jaroslaw Konik"
 
-. ~/.profile
+source ~/.profile
 
 echo "DONE!"
