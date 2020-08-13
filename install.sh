@@ -5,10 +5,10 @@ cd "$(dirname "$0")"
 rm -rf ~/.inputrc &&
 rm -rf ~/.tmux.conf &&
 rm -rf ~/.vimrc &&
-rm -rf ~/.bashrc &&
+rm -rf ~/.profile &&
 
 ln -s "$(pwd)/tmux.conf" ~/.tmux.conf &&
-ln -s "$(pwd)/bashrc" ~/.bashrc &&
+ln -s "$(pwd)/profile" ~/.profile &&
 ln -s "$(pwd)/vimrc" ~/.vimrc &&
 ln -s "$(pwd)/inputrc" ~/.inputrc &&
 
