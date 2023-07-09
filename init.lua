@@ -1,94 +1,89 @@
-local ensure_packer = function()
-	local fn = vim.fn
-	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-		vim.cmd([[packadd packer.nvim]])
-		return true
-	end
-	return false
-end
-
-local packer_bootstrap = ensure_packer()
-
-require("packer").init({
-	autoremove = true,
-})
-
-require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-	use("lewis6991/fileline.nvim")
-	use("mfussenegger/nvim-dap")
-	use({
-		"stevearc/stickybuf.nvim",
-		config = function()
-			require("stickybuf").setup()
-		end,
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
 	})
-	use("famiu/bufdelete.nvim")
-	use("neovim/nvim-lspconfig")
-	use("jose-elias-alvarez/null-ls.nvim")
-	use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
-	use("tiagovla/scope.nvim")
-	use({
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
+	"wbthomason/packer.nvim",
+	"lewis6991/fileline.nvim",
+	"mfussenegger/nvim-dap",
+	{
+		"stevearc/stickybuf.nvim",
+		opts = {},
+	},
+	"famiu/bufdelete.nvim",
+	"neovim/nvim-lspconfig",
+	"jose-elias-alvarez/null-ls.nvim",
+	"tiagovla/scope.nvim",
+	{
 		"folke/which-key.nvim",
-		config = function()
+		event = "VeryLazy",
+		init = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
-			require("which-key").setup({})
 		end,
-	})
-	use({
+		opts = {},
+	},
+	{
 		"folke/trouble.nvim",
-		requires = "nvim-tree/nvim-web-devicons",
-		config = function()
-			require("trouble").setup({
-				auto_open = true,
-			})
-		end,
-	})
-	use({
-		"j-hui/fidget.nvim",
-		config = function()
-			require("fidget").setup()
-		end,
-	})
-	use("terrortylor/nvim-comment")
-	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
-	use("petertriho/nvim-scrollbar")
-	use({
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+	},
+	"j-hui/fidget.nvim",
+	"terrortylor/nvim-comment",
+	{ "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
+	"petertriho/nvim-scrollbar",
+	{
 		"nvim-tree/nvim-tree.lua",
-		requires = {
-			"nvim-tree/nvim-web-devicons", -- optional
+		version = "*",
+		lazy = false,
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
 			require("nvim-tree").setup({})
 		end,
-	})
-	use("hrsh7th/nvim-cmp")
-	use({
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-nvim-lsp-signature-help",
-		"hrsh7th/cmp-vsnip",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-buffer",
-		after = { "hrsh7th/nvim-cmp" },
-		requires = { "hrsh7th/nvim-cmp" },
-	})
-	use("hrsh7th/vim-vsnip")
-	use("simrat39/rust-tools.nvim")
-	use("nvim-lua/popup.nvim")
-	use("nvim-lua/plenary.nvim")
-	use("nvim-telescope/telescope.nvim")
-	use({ "ellisonleao/gruvbox.nvim" })
-	use("rebelot/kanagawa.nvim")
-end)
+	},
 
--- the first run will install packer and our plugins
-if packer_bootstrap then
-	require("packer").sync()
-	return
-end
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-nvim-lsp-signature-help",
+	"hrsh7th/cmp-vsnip",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/vim-vsnip",
+	"simrat39/rust-tools.nvim",
+	"nvim-lua/popup.nvim",
+	"nvim-lua/plenary.nvim",
+	"nvim-telescope/telescope.nvim",
+	"rebelot/kanagawa.nvim",
+})
+
+-- Vim options
+vim.wo.number = true
+vim.o.wrap = false
+vim.g.mapleader = ","
+vim.wo.signcolumn = "yes" -- prevents jitter
+vim.opt.updatetime = 100
+vim.o.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme kanagawa]])
+-- Set completeopt to have a better completion experience
+-- :help completeopt
+-- menuone: popup even when there's only one match
+-- noinsert: Do not insert text until a selection is made
+-- noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
+vim.o.completeopt = "menuone,noinsert,noselect"
+-- Avoid showing extra messages when using completion
+vim.opt.shortmess = vim.opt.shortmess + "c"
 
 local function on_attach(client, buffer)
 	if client.supports_method("textDocument/formatting") then
@@ -106,7 +101,7 @@ local function on_attach(client, buffer)
 	end
 
 	local keymap_opts = { buffer = buffer }
-	-- Code navigation and shortcuts
+
 	vim.keymap.set("n", "<c-]>", vim.lsp.buf.definition, keymap_opts)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, keymap_opts)
 	vim.keymap.set("n", "gD", vim.lsp.buf.implementation, keymap_opts)
@@ -128,14 +123,10 @@ local function on_attach(client, buffer)
 		group = diag_float_grp,
 	})
 
-	-- Goto previous/next diagnostic warning/error
 	vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, keymap_opts)
 	vim.keymap.set("n", "g]", vim.diagnostic.goto_next, keymap_opts)
 end
 
--- Configure LSP through rust-tools.nvim plugin.
--- rust-tools will configure and enable certain LSP features for us.
--- See https://github.com/simrat39/rust-tools.nvim#configuration
 require("rust-tools").setup({
 	tools = {
 		runnables = {
@@ -148,18 +139,10 @@ require("rust-tools").setup({
 			other_hints_prefix = "",
 		},
 	},
-
-	-- all the opts to send to nvim-lspconfig
-	-- these override the defaults set by rust-tools.nvim
-	-- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
 	server = {
-		-- on_attach is a callback called when the language server attachs to the buffer
 		on_attach = on_attach,
 		settings = {
-			-- to enable rust-analyzer settings visit:
-			-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
 			["rust-analyzer"] = {
-				-- enable clippy on save
 				checkOnSave = {
 					command = "clippy",
 				},
@@ -168,8 +151,7 @@ require("rust-tools").setup({
 	},
 })
 
--- Setup Completion
--- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+-- Completion
 local cmp = require("cmp")
 cmp.setup({
 	snippet = {
@@ -180,7 +162,6 @@ cmp.setup({
 	mapping = {
 		["<Up>"] = cmp.mapping.select_prev_item(),
 		["<Down>"] = cmp.mapping.select_next_item(),
-		-- Add tab support
 		["<S-Tab>"] = cmp.mapping.select_prev_item(),
 		["<Tab>"] = cmp.mapping.select_next_item(),
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -192,8 +173,6 @@ cmp.setup({
 			select = true,
 		}),
 	},
-
-	-- Installed sources
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lsp_signature_help" },
@@ -203,17 +182,15 @@ cmp.setup({
 	},
 })
 
+-- Folder tree
 local function open_nvim_tree(data)
-	-- buffer is a directory
 	local directory = vim.fn.isdirectory(data.file) == 1
 
 	if not directory then
 		return
 	end
-	-- change to the directory
 	vim.cmd.cd(data.file)
 
-	-- open the tree
 	require("nvim-tree.api").tree.open()
 end
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
@@ -229,9 +206,6 @@ require("bufferline").setup({
 		end,
 	},
 })
-
--- Scrollbar
-require("scrollbar").setup()
 
 -- Scope
 require("scope").setup({
@@ -275,19 +249,5 @@ null_ls.setup({
 	on_attach = on_attach,
 })
 
--- Vim options
-vim.wo.number = true
-vim.o.wrap = false
-vim.g.mapleader = ","
-vim.wo.signcolumn = "yes" -- prevents jitter
-vim.opt.updatetime = 100
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme kanagawa]])
--- Set completeopt to have a better completion experience
--- :help completeopt
--- menuone: popup even when there's only one match
--- noinsert: Do not insert text until a selection is made
--- noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
-vim.o.completeopt = "menuone,noinsert,noselect"
--- Avoid showing extra messages when using completion
-vim.opt.shortmess = vim.opt.shortmess + "c"
+-- Scroll bar
+require("scrollbar").setup()
