@@ -13,7 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
-	"wbthomason/packer.nvim",
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -53,7 +52,6 @@ require("lazy").setup({
 			require("nvim-tree").setup({})
 		end,
 	},
-
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-nvim-lsp-signature-help",
@@ -65,7 +63,13 @@ require("lazy").setup({
 	"nvim-lua/popup.nvim",
 	"nvim-lua/plenary.nvim",
 	"nvim-telescope/telescope.nvim",
-	"rebelot/kanagawa.nvim",
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {},
+	},
+	"nvim-lualine/lualine.nvim",
 })
 
 -- Vim options
@@ -75,7 +79,7 @@ vim.g.mapleader = ","
 vim.wo.signcolumn = "yes" -- prevents jitter
 vim.opt.updatetime = 100
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme kanagawa]])
+vim.cmd([[colorscheme tokyonight]])
 -- Set completeopt to have a better completion experience
 -- :help completeopt
 -- menuone: popup even when there's only one match
@@ -251,3 +255,6 @@ null_ls.setup({
 
 -- Scroll bar
 require("scrollbar").setup()
+
+-- Status line
+require("lualine").setup()
