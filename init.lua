@@ -16,57 +16,37 @@ require("packer").init({
 })
 
 require("packer").startup(function(use)
-	-- Packer can manage itself
 	use("wbthomason/packer.nvim")
-
 	use("lewis6991/fileline.nvim")
-
-	use {
-	      'stevearc/stickybuf.nvim',
-	      config = function() require('stickybuf').setup() end
-	    }
-
-	-- use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-	--   require("toggleterm").setup()
-	-- end}
-
-	use 'famiu/bufdelete.nvim'
-
+	use("mfussenegger/nvim-dap")
+	use({
+		"stevearc/stickybuf.nvim",
+		config = function()
+			require("stickybuf").setup()
+		end,
+	})
+	use("famiu/bufdelete.nvim")
 	use("neovim/nvim-lspconfig")
-	use('jose-elias-alvarez/null-ls.nvim')
-
-	use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-
+	use("jose-elias-alvarez/null-ls.nvim")
+	use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim" })
 	use("tiagovla/scope.nvim")
-
 	use({
 		"folke/which-key.nvim",
 		config = function()
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
-			require("which-key").setup({
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
-			})
+			require("which-key").setup({})
 		end,
 	})
-
 	use({
 		"folke/trouble.nvim",
 		requires = "nvim-tree/nvim-web-devicons",
 		config = function()
 			require("trouble").setup({
-				auto_open = true
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
+				auto_open = true,
 			})
 		end,
 	})
-
-	-- Collection of common configurations for the Nvim LSP client
-	-- Visualize lsp progress
 	use({
 		"j-hui/fidget.nvim",
 		config = function()
@@ -75,9 +55,7 @@ require("packer").startup(function(use)
 	})
 	use("terrortylor/nvim-comment")
 	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
-
 	use("petertriho/nvim-scrollbar")
-
 	use({
 		"nvim-tree/nvim-tree.lua",
 		requires = {
@@ -87,34 +65,21 @@ require("packer").startup(function(use)
 			require("nvim-tree").setup({})
 		end,
 	})
-
-	-- Autocompletion framework
 	use("hrsh7th/nvim-cmp")
 	use({
-		-- cmp LSP completion
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-nvim-lsp-signature-help",
-
-		-- cmp Snippet completion
 		"hrsh7th/cmp-vsnip",
-		-- cmp Path completion
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-buffer",
 		after = { "hrsh7th/nvim-cmp" },
 		requires = { "hrsh7th/nvim-cmp" },
 	})
-	-- See hrsh7th other plugins for more great completion sources!
-	-- Snippet engine
 	use("hrsh7th/vim-vsnip")
-	-- Adds extra functionality over rust analyzer
 	use("simrat39/rust-tools.nvim")
-
-	-- Optional
 	use("nvim-lua/popup.nvim")
 	use("nvim-lua/plenary.nvim")
 	use("nvim-telescope/telescope.nvim")
-
-	-- Some color scheme other then default
 	use({ "ellisonleao/gruvbox.nvim" })
 	use("rebelot/kanagawa.nvim")
 end)
@@ -125,27 +90,20 @@ if packer_bootstrap then
 	return
 end
 
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme kanagawa]])
-
--- Set completeopt to have a better completion experience
--- :help completeopt
--- menuone: popup even when there's only one match
--- noinsert: Do not insert text until a selection is made
--- noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
-vim.o.completeopt = "menuone,noinsert,noselect"
-
--- Avoid showing extra messages when using completion
-vim.opt.shortmess = vim.opt.shortmess + "c"
-
 local function on_attach(client, buffer)
-	vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-		buffer = buffer,
-		callback = function()
-			vim.lsp.buf.format()
-
-		end,
-	})
+	if client.supports_method("textDocument/formatting") then
+		vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+			buffer = buffer,
+			callback = function()
+				vim.lsp.buf.format({
+					async = false,
+					filter = function(client)
+						return client.name ~= "tsserver"
+					end,
+				})
+			end,
+		})
+	end
 
 	local keymap_opts = { buffer = buffer }
 	-- Code navigation and shortcuts
@@ -175,16 +133,10 @@ local function on_attach(client, buffer)
 	vim.keymap.set("n", "g]", vim.diagnostic.goto_next, keymap_opts)
 end
 
-vim.keymap.set("n", "<c-c>", function()
-        if vim.bo.buftype ~= "nofile" and vim.bo.buftype ~= "terminal" then
-		require('bufdelete').bufdelete(0, false)
-	end
-end, keymap_opts)
-
 -- Configure LSP through rust-tools.nvim plugin.
 -- rust-tools will configure and enable certain LSP features for us.
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
-local opts = {
+require("rust-tools").setup({
 	tools = {
 		runnables = {
 			use_telescope = true,
@@ -214,9 +166,7 @@ local opts = {
 			},
 		},
 	},
-}
-
-require("rust-tools").setup(opts)
+})
 
 -- Setup Completion
 -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
@@ -253,44 +203,43 @@ cmp.setup({
 	},
 })
 
--- have a fixed column for the diagnostics to appear in
--- this removes the jitter when warnings/errors flow in
-vim.wo.signcolumn = "yes"
-
--- " Set updatetime for CursorHold
--- " 300ms of no cursor movement to trigger CursorHold
--- set updatetime=300
-vim.opt.updatetime = 100
-
 local function open_nvim_tree(data)
+	-- buffer is a directory
+	local directory = vim.fn.isdirectory(data.file) == 1
 
-  -- buffer is a directory
-  local directory = vim.fn.isdirectory(data.file) == 1
+	if not directory then
+		return
+	end
+	-- change to the directory
+	vim.cmd.cd(data.file)
 
-  if not directory then
-    return
-  end
-
-  -- change to the directory
-  vim.cmd.cd(data.file)
-
-  -- open the tree
-  require("nvim-tree.api").tree.open()
+	-- open the tree
+	require("nvim-tree.api").tree.open()
 end
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
+-- Comments
 require("nvim_comment").setup()
+
+-- Buffer line
 require("bufferline").setup({
-	options =  {
-		close_command = function (bufnum)
-			require('bufdelete').bufdelete(bufnum)
-		end
-	}
+	options = {
+		close_command = function(bufnum)
+			require("bufdelete").bufdelete(bufnum)
+		end,
+	},
 })
+
+-- Scrollbar
 require("scrollbar").setup()
 
-vim.g.mapleader = ","
+-- Scope
+require("scope").setup({
+	restore_state = false,
+})
 
+-- Keybinds
+vim.keymap.set("n", "<leader><leader>", ":luafile $MYVIMRC<CR>", {}) -- reload nvim config
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<c-p>", builtin.find_files, {})
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
@@ -300,61 +249,45 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, {})
 vim.keymap.set("n", "<leader>g", require("neogit").open, {})
 vim.keymap.set("n", "<leader>tr", vim.diagnostic.reset, {})
-
-vim.wo.number = true
-
-vim.keymap.set("n", "<leader><leader>", ":luafile $MYVIMRC<CR>", {})
-
-require("scope").setup({
-    restore_state = false, -- experimental
-})
-
-require'lspconfig'.tsserver.setup {}
-require'lspconfig'.ruby_ls.setup {
-	cmd = { 'bundle', 'exec', 'ruby-lsp' },
-	on_attach = function(client,bufnr)
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                group = augroup,
-                buffer = bufnr,
-                callback = function()
-                    vim.lsp.buf.format {
-			    async = false,
-		    }
-                end,
-            })
+vim.keymap.set("n", "<c-c>", function()
+	if vim.bo.buftype ~= "nofile" and vim.bo.buftype ~= "terminal" then
+		require("bufdelete").bufdelete(0, false)
 	end
-}
-require'lspconfig'.solargraph.setup{
+end, keymap_opts)
+
+-- LSP Config
+require("lspconfig").tsserver.setup({})
+require("lspconfig").ruby_ls.setup({
+	cmd = { "bundle", "exec", "ruby-lsp" },
+	on_attach = on_attach,
+})
+require("lspconfig").solargraph.setup({
 	cmd = { "bundle", "exec", "solargraph", "stdio" },
-	on_attach = on_attach
-}
-
+	on_attach = on_attach,
+})
 local null_ls = require("null-ls")
-
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
-    sources = {
-	null_ls.builtins.formatting.prettierd,
-	null_ls.builtins.formatting.rubocop
-    },
-    -- you can reuse a shared lspconfig on_attach callback here
-    on_attach = function(client, bufnr)
-        if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                group = augroup,
-                buffer = bufnr,
-                callback = function()
-                    -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-                    -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
-                    vim.lsp.buf.format {
-			    async = false,
-			    filter = function(client) return client.name ~= "tsserver" end
-		    }
-                end,
-            })
-        end
-    end,
+	sources = {
+		null_ls.builtins.formatting.prettierd,
+		null_ls.builtins.formatting.rubocop,
+		null_ls.builtins.formatting.stylua,
+	},
+	on_attach = on_attach,
 })
 
+-- Vim options
+vim.wo.number = true
 vim.o.wrap = false
+vim.g.mapleader = ","
+vim.wo.signcolumn = "yes" -- prevents jitter
+vim.opt.updatetime = 100
+vim.o.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme kanagawa]])
+-- Set completeopt to have a better completion experience
+-- :help completeopt
+-- menuone: popup even when there's only one match
+-- noinsert: Do not insert text until a selection is made
+-- noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
+vim.o.completeopt = "menuone,noinsert,noselect"
+-- Avoid showing extra messages when using completion
+vim.opt.shortmess = vim.opt.shortmess + "c"
