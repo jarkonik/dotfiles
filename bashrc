@@ -25,4 +25,3 @@ eval "$(~/.rbenv/bin/rbenv init - bash)"
 alias vim=nvim
 export EDITOR=nvim
 export TERM='xterm-256color'
-
