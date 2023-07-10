@@ -36,9 +36,9 @@
     },
     "editor.inlayHints.fontSize": 8,
     "editor.inlayHints.padding": true,
-    "workbench.colorTheme": "Bearded Theme Black & Ruby",
+    "workbench.colorTheme": "Catppuccin Macchiato",
     "gitdoc.autoCommitDelay": 3000,
-    "workbench.iconTheme": "simple-icons",
+    "workbench.iconTheme": "catppuccin-macchiato",
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
