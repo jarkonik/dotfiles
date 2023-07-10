@@ -1,0 +1,45 @@
+{
+    "keyboard.dispatch": "keyCode",
+    "godot_tools.gdscript_lsp_server_port": 6005,
+    "terminal.integrated.shellArgs.linux": [
+        "-l"
+    ],
+    "editor.fontLigatures": true,
+    "vim.handleKeys": {
+        "<C-w>": false
+    },
+    "editor.fontFamily": "FiraCode Nerd Font",
+    "yaml.schemas": {
+        "file:///home/jaroslaw/.vscode-oss/extensions/atlassian.atlascode-3.0.2-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    },
+    "git.autofetch": true,
+    "editor.formatOnSave": true,
+    "terminal.integrated.confirmOnExit": "always",
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.editor.enablePreview": false,
+    "diffEditor.renderSideBySide": false,
+    "sshfs.configs": [
+        {
+            "name": "proest"
+        }
+    ],
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "terminal.integrated.scrollback": 10000,
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    },
+    "editor.inlayHints.fontSize": 8,
+    "editor.inlayHints.padding": true,
+    "workbench.colorTheme": "Bearded Theme Black & Ruby",
+    "gitdoc.autoCommitDelay": 3000,
+    "workbench.iconTheme": "simple-icons",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}

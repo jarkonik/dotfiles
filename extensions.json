@@ -1,0 +1,444 @@
+[
+    {
+        "identifier": {
+            "id": "vscodevim.vim",
+            "uuid": "d96e79c6-8b25-4be3-8545-0e0ecefcae03"
+        },
+        "version": "1.25.2",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/vscodevim.vim-1.25.2-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "vscodevim.vim-1.25.2-universal",
+        "metadata": {
+            "id": "d96e79c6-8b25-4be3-8545-0e0ecefcae03",
+            "publisherId": "5d63889b-1b67-4b1f-8350-4f1dce041a26",
+            "publisherDisplayName": "vscodevim",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1680282731638,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "geequlim.godot-tools",
+            "uuid": "bbcbb8de-2baf-455f-a458-d5a6f084cebb"
+        },
+        "version": "1.3.1",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/geequlim.godot-tools-1.3.1-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "geequlim.godot-tools-1.3.1-universal",
+        "metadata": {
+            "id": "bbcbb8de-2baf-455f-a458-d5a6f084cebb",
+            "publisherId": "aad638a3-8106-4023-80fe-66580f3e3b1c",
+            "publisherDisplayName": "geequlim",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1680358851415,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "rhaiscript.vscode-rhai",
+            "uuid": "a42498de-5a1f-4d59-bd71-d93e51e0a0ed"
+        },
+        "version": "0.6.6",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/rhaiscript.vscode-rhai-0.6.6-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "rhaiscript.vscode-rhai-0.6.6-universal",
+        "metadata": {
+            "id": "a42498de-5a1f-4d59-bd71-d93e51e0a0ed",
+            "publisherId": "628c077a-8ff1-4dea-8505-7c6b295c7ea6",
+            "publisherDisplayName": "rhaiscript",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1684314707040,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "bungcip.better-toml",
+            "uuid": "464f4ac7-af65-4aa9-9907-4ba7fa419085"
+        },
+        "version": "0.3.2",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/bungcip.better-toml-0.3.2-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "bungcip.better-toml-0.3.2-universal",
+        "metadata": {
+            "id": "464f4ac7-af65-4aa9-9907-4ba7fa419085",
+            "publisherId": "87bfa971-0ee5-4ec2-afdb-1d26a8959fa4",
+            "publisherDisplayName": "bungcip",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1684478813643,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "vsls-contrib.gitdoc",
+            "uuid": "7be174a5-ac74-4496-bf8b-8cc6cc60408c"
+        },
+        "version": "0.1.0",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/vsls-contrib.gitdoc-0.1.0-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "vsls-contrib.gitdoc-0.1.0-universal",
+        "metadata": {
+            "id": "7be174a5-ac74-4496-bf8b-8cc6cc60408c",
+            "publisherId": "03b54342-c642-4e41-b84d-6a2222e2b060",
+            "publisherDisplayName": "vsls-contrib",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1684771186531,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "laurenttreguier.vscode-simple-icons",
+            "uuid": "23d65a8c-fcd4-4897-86da-7fe55088e2c6"
+        },
+        "version": "1.16.0",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/laurenttreguier.vscode-simple-icons-1.16.0-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "laurenttreguier.vscode-simple-icons-1.16.0-universal",
+        "metadata": {
+            "id": "23d65a8c-fcd4-4897-86da-7fe55088e2c6",
+            "publisherId": "08f24380-f487-49dd-ba4a-ea7bc7bda282",
+            "publisherDisplayName": "LaurentTreguier",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1684869578706,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "ms-azuretools.vscode-docker",
+            "uuid": "0479fc1c-3d67-49f9-b087-fb9069afe48f"
+        },
+        "version": "1.25.1",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/ms-azuretools.vscode-docker-1.25.1-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "ms-azuretools.vscode-docker-1.25.1-universal",
+        "metadata": {
+            "id": "0479fc1c-3d67-49f9-b087-fb9069afe48f",
+            "publisherId": "52b787f2-79a9-4f32-99b4-393afe3005d3",
+            "publisherDisplayName": "ms-azuretools",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1684874104777,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "castwide.solargraph",
+            "uuid": "349e83e2-207c-4309-a8d2-dfa43f7ee0c9"
+        },
+        "version": "0.24.0",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/castwide.solargraph-0.24.0-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "castwide.solargraph-0.24.0-universal",
+        "metadata": {
+            "id": "349e83e2-207c-4309-a8d2-dfa43f7ee0c9",
+            "publisherId": "8244762e-597b-434d-b303-f780ff47b36c",
+            "publisherDisplayName": "castwide",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1684905859995,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "shopify.ruby-lsp"
+        },
+        "version": "0.3.1",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/shopify.ruby-lsp-0.3.1",
+            "scheme": "file"
+        },
+        "relativeLocation": "shopify.ruby-lsp-0.3.1",
+        "metadata": {
+            "installedTimestamp": 1684906930324
+        }
+    },
+    {
+        "identifier": {
+            "id": "johnpapa.vscode-peacock",
+            "uuid": "5a7017bf-c571-4d77-b902-6e56b16f539a"
+        },
+        "version": "4.2.2",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/johnpapa.vscode-peacock-4.2.2-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "johnpapa.vscode-peacock-4.2.2-universal",
+        "metadata": {
+            "id": "5a7017bf-c571-4d77-b902-6e56b16f539a",
+            "publisherId": "4434843a-4ebf-4f44-84f5-4176380c492d",
+            "publisherDisplayName": "johnpapa",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1685620324115,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "muhammad-sammy.csharp",
+            "uuid": "57b4ceec-c35a-4a96-ab38-23c6338df406"
+        },
+        "version": "1.25.7",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/muhammad-sammy.csharp-1.25.7-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "muhammad-sammy.csharp-1.25.7-universal",
+        "metadata": {
+            "id": "57b4ceec-c35a-4a96-ab38-23c6338df406",
+            "publisherId": "cc79407d-f6d2-4535-9bd9-920d8557403d",
+            "publisherDisplayName": "muhammad-sammy",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1686297342666,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "soutaro.steep-vscode"
+        },
+        "version": "0.7.0",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/soutaro.steep-vscode-0.7.0",
+            "scheme": "file"
+        },
+        "relativeLocation": "soutaro.steep-vscode-0.7.0",
+        "metadata": {
+            "installedTimestamp": 1686302185799
+        }
+    },
+    {
+        "identifier": {
+            "id": "sorbet.sorbet-vscode-extension",
+            "uuid": "67d58bf5-9c4f-495f-bee0-d1d3f5898a8b"
+        },
+        "version": "0.3.20",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/sorbet.sorbet-vscode-extension-0.3.20-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "sorbet.sorbet-vscode-extension-0.3.20-universal",
+        "metadata": {
+            "id": "67d58bf5-9c4f-495f-bee0-d1d3f5898a8b",
+            "publisherId": "a53a6e94-7c19-4bf7-ac90-c79e56b9313d",
+            "publisherDisplayName": "sorbet",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1686305162990,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "yzane.markdown-pdf",
+            "uuid": "f015bc3c-a098-4245-8765-615e002e09ab"
+        },
+        "version": "1.4.4",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/yzane.markdown-pdf-1.4.4-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "yzane.markdown-pdf-1.4.4-universal",
+        "metadata": {
+            "id": "f015bc3c-a098-4245-8765-615e002e09ab",
+            "publisherId": "86794f67-46a8-4137-a5a4-1415a0e41e7d",
+            "publisherDisplayName": "yzane",
+            "targetPlatform": "universal",
+            "updated": false,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1686561194091,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "ms-vscode-remote.remote-containers"
+        },
+        "version": "0.296.0",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/ms-vscode-remote.remote-containers-0.296.0",
+            "scheme": "file"
+        },
+        "relativeLocation": "ms-vscode-remote.remote-containers-0.296.0",
+        "metadata": {
+            "installedTimestamp": 1686584500229
+        }
+    },
+    {
+        "identifier": {
+            "id": "jeanp413.open-remote-ssh",
+            "uuid": "9fc16cea-08e2-4ae5-bf75-224004d722ff"
+        },
+        "version": "0.0.39",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/jeanp413.open-remote-ssh-0.0.39-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "jeanp413.open-remote-ssh-0.0.39-universal",
+        "metadata": {
+            "id": "9fc16cea-08e2-4ae5-bf75-224004d722ff",
+            "publisherId": "82e59b79-acc5-4a5b-81cb-9303cbdc05cb",
+            "publisherDisplayName": "jeanp413",
+            "targetPlatform": "universal",
+            "isApplicationScoped": false,
+            "updated": true,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1686647128069,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "beardedbear.beardedtheme",
+            "uuid": "d1818e93-bccc-4812-8b8b-37aabc5a7a94"
+        },
+        "version": "8.2.1",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/beardedbear.beardedtheme-8.2.1-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "beardedbear.beardedtheme-8.2.1-universal",
+        "metadata": {
+            "id": "d1818e93-bccc-4812-8b8b-37aabc5a7a94",
+            "publisherId": "bfe8429d-0105-48ef-831f-69e781aeb77c",
+            "publisherDisplayName": "BeardedBear",
+            "targetPlatform": "universal",
+            "isApplicationScoped": false,
+            "updated": true,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1688987988406,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "polymeilex.wgsl",
+            "uuid": "5f7eb109-3b69-42c6-b2a2-b93fa06fb18d"
+        },
+        "version": "0.1.15",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/polymeilex.wgsl-0.1.15-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "polymeilex.wgsl-0.1.15-universal",
+        "metadata": {
+            "id": "5f7eb109-3b69-42c6-b2a2-b93fa06fb18d",
+            "publisherId": "d74e7254-1bbd-4279-ad17-0745bd092120",
+            "publisherDisplayName": "PolyMeilex",
+            "targetPlatform": "universal",
+            "isApplicationScoped": false,
+            "updated": true,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1688987988432,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "rust-lang.rust-analyzer",
+            "uuid": "06574cb4-e5dc-4631-8174-a543a4533621"
+        },
+        "version": "0.3.1583",
+        "location": {
+            "$mid": 1,
+            "path": "/home/jaroslaw/.vscode-oss/extensions/rust-lang.rust-analyzer-0.3.1583-linux-x64",
+            "scheme": "file"
+        },
+        "relativeLocation": "rust-lang.rust-analyzer-0.3.1583-linux-x64",
+        "metadata": {
+            "id": "06574cb4-e5dc-4631-8174-a543a4533621",
+            "publisherId": "cb14a7a7-a188-40bd-a953-e0a20757c5dd",
+            "publisherDisplayName": "rust-lang",
+            "targetPlatform": "linux-x64",
+            "isApplicationScoped": false,
+            "updated": true,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1688987988477,
+            "preRelease": false
+        }
+    },
+    {
+        "identifier": {
+            "id": "eamodio.gitlens",
+            "uuid": "4de763bd-505d-4978-9575-2b7696ecf94e"
+        },
+        "version": "14.0.1",
+        "location": {
+            "$mid": 1,
+            "fsPath": "/home/jaroslaw/.vscode-oss/extensions/eamodio.gitlens-14.0.1-universal",
+            "path": "/home/jaroslaw/.vscode-oss/extensions/eamodio.gitlens-14.0.1-universal",
+            "scheme": "file"
+        },
+        "relativeLocation": "eamodio.gitlens-14.0.1-universal",
+        "metadata": {
+            "id": "4de763bd-505d-4978-9575-2b7696ecf94e",
+            "publisherId": "678d198b-9b2e-49d3-96ff-6d801c9575df",
+            "publisherDisplayName": "eamodio",
+            "targetPlatform": "universal",
+            "isApplicationScoped": false,
+            "updated": true,
+            "isPreReleaseVersion": false,
+            "installedTimestamp": 1688987988507,
+            "preRelease": false
+        }
+    }
+]
