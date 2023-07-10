@@ -230,6 +230,7 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, {})
 vim.keymap.set("n", "<leader>g", require("neogit").open, {})
 vim.keymap.set("n", "<leader>tr", vim.diagnostic.reset, {})
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {})
 vim.keymap.set("n", "<c-c>", function()
 	if vim.bo.buftype ~= "nofile" and vim.bo.buftype ~= "terminal" then
 		require("bufdelete").bufdelete(0, false)
