@@ -72,6 +72,8 @@ require("lazy").setup({
 	"nvim-lualine/lualine.nvim",
 })
 
+require("fidget").setup({})
+
 -- Vim options
 vim.wo.number = true
 vim.o.wrap = false
@@ -235,6 +237,7 @@ end, keymap_opts)
 
 -- LSP Config
 require("lspconfig").tsserver.setup({})
+require("lspconfig").gdscript.setup({})
 require("lspconfig").ruby_ls.setup({
 	cmd = { "bundle", "exec", "ruby-lsp" },
 	on_attach = on_attach,
