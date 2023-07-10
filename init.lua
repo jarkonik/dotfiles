@@ -37,7 +37,7 @@ require("lazy").setup({
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {},
 	},
-	"j-hui/fidget.nvim",
+	{ "j-hui/fidget.nvim", tag = "legacy" },
 	"terrortylor/nvim-comment",
 	{ "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
 	"petertriho/nvim-scrollbar",
