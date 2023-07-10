@@ -63,26 +63,25 @@ require("lazy").setup({
 	"nvim-lua/popup.nvim",
 	"nvim-lua/plenary.nvim",
 	"nvim-telescope/telescope.nvim",
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {},
-	},
 	"nvim-lualine/lualine.nvim",
 	"ojroques/nvim-osc52",
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 })
+
+require("stickybuf").setup()
 
 require("fidget").setup({})
 
 -- Vim options
+vim.cmd("autocmd FileType qf set nobuflisted")
+vim.o.hidden = true
 vim.wo.number = true
 vim.o.wrap = false
 vim.g.mapleader = ","
 vim.wo.signcolumn = "yes" -- prevents jitter
 vim.opt.updatetime = 100
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme tokyonight-night]])
+vim.cmd.colorscheme("catppuccin")
 -- Set completeopt to have a better completion experience
 -- :help completeopt
 -- menuone: popup even when there's only one match
