@@ -65,7 +65,7 @@ require("lazy").setup({
 	"nvim-telescope/telescope.nvim",
 	"nvim-lualine/lualine.nvim",
 	"ojroques/nvim-osc52",
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{ "EdenEast/nightfox.nvim" },
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -91,7 +91,7 @@ vim.g.mapleader = ","
 vim.wo.signcolumn = "yes" -- prevents jitter
 vim.opt.updatetime = 100
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd.colorscheme("catppuccin")
+vim.cmd("colorscheme nightfox")
 -- Set completeopt to have a better completion experience
 -- :help completeopt
 -- menuone: popup even when there's only one match
