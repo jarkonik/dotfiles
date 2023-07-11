@@ -76,6 +76,7 @@ require("lazy").setup({
 			})
 		end,
 	},
+	"f-person/git-blame.nvim",
 })
 
 require("stickybuf").setup()

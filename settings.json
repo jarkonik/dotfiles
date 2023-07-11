@@ -41,5 +41,6 @@
     "workbench.iconTheme": "catppuccin-macchiato",
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "window.zoomLevel": 1
 }
