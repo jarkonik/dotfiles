@@ -77,11 +77,12 @@ require("lazy").setup({
 		end,
 	},
 	"f-person/git-blame.nvim",
+	"lewis6991/gitsigns.nvim",
 })
 
 require("stickybuf").setup()
-
 require("fidget").setup({})
+require("gitsigns").setup()
 
 -- Vim options
 vim.cmd("autocmd FileType qf set nobuflisted")
@@ -120,7 +121,6 @@ local function on_attach(client, buffer)
 	local keymap_opts = { buffer = buffer }
 
 	vim.keymap.set("n", "<c-]>", vim.lsp.buf.definition, keymap_opts)
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, keymap_opts)
 	vim.keymap.set("n", "gD", vim.lsp.buf.implementation, keymap_opts)
 	vim.keymap.set("n", "<c-k>", vim.lsp.buf.signature_help, keymap_opts)
 	vim.keymap.set("n", "1gD", vim.lsp.buf.type_definition, keymap_opts)
@@ -130,6 +130,7 @@ local function on_attach(client, buffer)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, keymap_opts)
 	vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
+	vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover, keymap_opts)
 
 	-- Show diagnostic popup on cursor hover
 	local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
@@ -218,9 +219,9 @@ require("nvim_comment").setup()
 -- Buffer line
 require("bufferline").setup({
 	options = {
-		close_command = function(bufnum)
-			require("bufdelete").bufdelete(bufnum)
-		end,
+		close_command = false,
+		show_buffer_close_icons = false,
+		right_mouse_command = "",
 	},
 })
 
@@ -230,7 +231,6 @@ require("scope").setup({
 })
 
 -- Keybinds
-vim.keymap.set("n", "<leader><leader>", ":luafile $MYVIMRC<CR>", {}) -- reload nvim config
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<c-p>", builtin.find_files, {})
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
@@ -249,7 +249,9 @@ end, keymap_opts)
 
 -- LSP Config
 require("lspconfig").tsserver.setup({})
-require("lspconfig").gdscript.setup({})
+require("lspconfig").gdscript.setup({
+	on_attach = on_attach,
+})
 require("lspconfig").ruby_ls.setup({
 	cmd = { "bundle", "exec", "ruby-lsp" },
 	on_attach = on_attach,
@@ -264,6 +266,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettierd,
 		null_ls.builtins.formatting.rubocop,
 		null_ls.builtins.formatting.stylua,
+		null_ls.builtins.code_actions.gitsigns,
 	},
 	on_attach = on_attach,
 })
