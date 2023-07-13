@@ -232,13 +232,22 @@ require("scope").setup({
 
 -- Keybinds
 local builtin = require("telescope.builtin")
+local wk = require("which-key")
+
+wk.register({
+	o = {
+		name = "Open",
+		t = { "<cmd>terminal<CR>", "Open Terminal" },
+	},
+}, { prefix = "<leader>" })
+vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>", {})
 vim.keymap.set("n", "<c-p>", builtin.find_files, {})
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<leader>t", require("nvim-tree.api").tree.toggle, {})
-vim.keymap.set("n", "<leader>g", require("neogit").open, {})
+vim.keymap.set("n", "<leader>tt", require("nvim-tree.api").tree.toggle, {})
+vim.keymap.set("n", "<leader>og", require("neogit").open, {})
 vim.keymap.set("n", "<leader>tr", vim.diagnostic.reset, {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {})
 vim.keymap.set("n", "<c-c>", function()
