@@ -78,11 +78,14 @@ require("lazy").setup({
 	},
 	"f-person/git-blame.nvim",
 	"lewis6991/gitsigns.nvim",
+	"klen/nvim-test",
+	"nvim-treesitter/nvim-treesitter"
 })
 
 require("stickybuf").setup()
 require("fidget").setup({})
 require("gitsigns").setup()
+require("nvim-test").setup()
 
 -- Vim options
 vim.cmd("autocmd FileType qf set nobuflisted")
