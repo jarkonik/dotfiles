@@ -78,14 +78,13 @@ require("lazy").setup({
 	},
 	"f-person/git-blame.nvim",
 	"lewis6991/gitsigns.nvim",
-	"klen/nvim-test",
-	"nvim-treesitter/nvim-treesitter"
+	"nvim-treesitter/nvim-treesitter",
+	"vim-test/vim-test",
 })
 
 require("stickybuf").setup()
 require("fidget").setup({})
 require("gitsigns").setup()
-require("nvim-test").setup()
 
 -- Vim options
 vim.cmd("autocmd FileType qf set nobuflisted")
@@ -307,3 +306,14 @@ vim.g.clipboard = {
 -- Now the '+' register will copy to system clipboard using OSC52
 vim.keymap.set("n", "<leader>c", '"+y')
 vim.keymap.set("n", "<leader>cc", '"+yy')
+
+require("nvim-treesitter.configs").setup({
+	ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+	auto_install = true,
+	highlight = {
+		enable = true,
+	},
+	indent = {
+		enable = true,
+	},
+})
