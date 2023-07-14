@@ -145,6 +145,7 @@ local function on_attach(client, buffer)
 		w = {
 			name = "Word",
 			h = { vim.lsp.buf.hover, "LSP Hover" },
+			r = { vim.lsp.buf.rename, "Rename" },
 		},
 	}, { prefix = "<leader>" })
 
@@ -158,7 +159,6 @@ local function on_attach(client, buffer)
 	vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, keymap_opts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, keymap_opts)
-	vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
 
 	-- Show diagnostic popup on cursor hover
 	local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
