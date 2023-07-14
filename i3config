@@ -49,10 +49,10 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+Shift+q [con_id="__focused__" class="^(?!thunderbird|Caprine|discord|Alacritty).*$"] kill
 
 # start dmenu (a program launcher)
 # A more modern dmenu replacement is rofi:
@@ -225,6 +225,12 @@ for_window [class="dolphin"] floating enable
 for_window [class="Caprine"] floating enable move scratchpad
 for_window [class="discord"] floating enable move scratchpad
 for_window [class="thunderbird"] floating enable move scratchpad
+for_window [class="Slack"] floating enable move scratchpad
+for_window [class="zoom"] floating enable 
+for_window [title="Overview – Home Assistant"] floating enable 
+for_window [title="Outlook"] floating enable 
+for_window [title="Netflix"] floating enable 
+for_window [title="Welcome to Prime Video"] floating enable 
 
 bindsym $mod+Shift+minus move scratchpad
 

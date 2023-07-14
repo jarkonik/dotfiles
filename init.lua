@@ -80,10 +80,21 @@ require("lazy").setup({
 	"lewis6991/gitsigns.nvim",
 	"nvim-treesitter/nvim-treesitter",
 	"vim-test/vim-test",
+	"sindrets/diffview.nvim",
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {}, -- this is equalent to setup({}) function
+	},
 })
 
+-- Stick buffer
 require("stickybuf").setup()
+
+-- LSP Status
 require("fidget").setup({})
+
+-- Git gutter
 require("gitsigns").setup()
 
 -- Vim options
@@ -122,6 +133,7 @@ local function on_attach(client, buffer)
 
 	local keymap_opts = { buffer = buffer }
 
+	-- TODO: Register in which-key
 	vim.keymap.set("n", "<c-]>", vim.lsp.buf.definition, keymap_opts)
 	vim.keymap.set("n", "gD", vim.lsp.buf.implementation, keymap_opts)
 	vim.keymap.set("n", "<c-k>", vim.lsp.buf.signature_help, keymap_opts)
@@ -202,6 +214,14 @@ cmp.setup({
 	},
 })
 
+-- Git
+local neogit = require("neogit")
+neogit.setup({
+	integrations = {
+		diffview = true,
+	},
+})
+
 -- Folder tree
 local function open_nvim_tree(data)
 	local directory = vim.fn.isdirectory(data.file) == 1
@@ -214,6 +234,20 @@ local function open_nvim_tree(data)
 	require("nvim-tree.api").tree.open()
 end
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
+	pattern = "NvimTree_*",
+	callback = function()
+		local layout = vim.api.nvim_call_function("winlayout", {})
+		if
+			layout[1] == "leaf"
+			and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
+			and layout[3] == nil
+		then
+			vim.cmd("confirm quit")
+		end
+	end,
+})
 
 -- Comments
 require("nvim_comment").setup()
@@ -233,7 +267,7 @@ require("scope").setup({
 })
 
 -- Keybinds
-local builtin = require("telescope.builtin")
+local telescope_builtin = require("telescope.builtin")
 local wk = require("which-key")
 
 wk.register({
@@ -241,16 +275,32 @@ wk.register({
 		name = "Open",
 		t = { "<cmd>terminal<CR>", "Open Terminal" },
 	},
+	f = {
+		name = "Find",
+		f = { telescope_builtin.find_files, "Find files" },
+		g = { telescope_builtin.live_grep, "Grep" },
+		b = { telescope_builtin.buffers, "Find buffers" },
+		h = { telescope_builtin.help_tags, "Find help tags" },
+	},
+	t = {
+		name = "Tree",
+		f = { "<cmd>NvimTreeFindFile<CR>", "Focus current file in tree" },
+		t = { require("nvim-tree.api").tree.toggle, "Toggle tree" },
+	},
+	g = { neogit.open, "Open git" },
+	r = {
+		name = "Refresh",
+		d = { vim.diagnostic.reset, "Refresh diagnostic" },
+	},
+	b = {
+		name = "Buffer",
+		p = { "<cmd>PinBuffer<CR>", "Pin buffer" },
+		u = { "<cmd>Unpin<CR>", "Unpin buffer" },
+	},
 }, { prefix = "<leader>" })
+
 vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>", {})
-vim.keymap.set("n", "<c-p>", builtin.find_files, {})
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<leader>tt", require("nvim-tree.api").tree.toggle, {})
-vim.keymap.set("n", "<leader>og", require("neogit").open, {})
-vim.keymap.set("n", "<leader>tr", vim.diagnostic.reset, {})
+vim.keymap.set("n", "<c-p>", telescope_builtin.find_files, {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {})
 vim.keymap.set("n", "<c-c>", function()
 	if vim.bo.buftype ~= "nofile" and vim.bo.buftype ~= "terminal" then
@@ -307,6 +357,7 @@ vim.g.clipboard = {
 vim.keymap.set("n", "<leader>c", '"+y')
 vim.keymap.set("n", "<leader>cc", '"+yy')
 
+-- Language Syntax
 require("nvim-treesitter.configs").setup({
 	ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
 	auto_install = true,
@@ -318,4 +369,5 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 
+-- Tests
 vim.g["test#strategy"] = "neovim"
