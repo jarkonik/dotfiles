@@ -94,6 +94,8 @@ require("lazy").setup({
 	},
 })
 
+local wk = require("which-key")
+
 -- Stick buffer
 require("stickybuf").setup()
 
@@ -139,7 +141,14 @@ local function on_attach(client, buffer)
 
 	local keymap_opts = { buffer = buffer }
 
-	-- TODO: Register in which-key
+	wk.register({
+		w = {
+			name = "Word",
+			h = { vim.lsp.buf.hover, "LSP Hover" },
+		},
+	}, { prefix = "<leader>" })
+
+	-- TODO: Register all in which-key
 	vim.keymap.set("n", "<c-]>", vim.lsp.buf.definition, keymap_opts)
 	vim.keymap.set("n", "gD", vim.lsp.buf.implementation, keymap_opts)
 	vim.keymap.set("n", "<c-k>", vim.lsp.buf.signature_help, keymap_opts)
@@ -150,7 +159,6 @@ local function on_attach(client, buffer)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, keymap_opts)
 	vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
-	vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover, keymap_opts)
 
 	-- Show diagnostic popup on cursor hover
 	local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
@@ -274,12 +282,11 @@ require("scope").setup({
 
 -- Keybinds
 local telescope_builtin = require("telescope.builtin")
-local wk = require("which-key")
 
 wk.register({
-	o = {
-		name = "Open",
-		t = { "<cmd>terminal<CR>", "Open Terminal" },
+	n = {
+		name = "New",
+		t = { "<cmd>terminal<CR>", "New Terminal" },
 	},
 	f = {
 		name = "Find",
@@ -293,7 +300,10 @@ wk.register({
 		f = { "<cmd>NvimTreeFindFile<CR>", "Focus current file in tree" },
 		t = { require("nvim-tree.api").tree.toggle, "Toggle tree" },
 	},
-	g = { neogit.open, "Open git" },
+	g = {
+		name = "Git",
+		o = { neogit.open, "Open Git" },
+	},
 	r = {
 		name = "Refresh",
 		d = { vim.diagnostic.reset, "Refresh diagnostic" },
