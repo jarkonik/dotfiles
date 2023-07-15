@@ -233,6 +233,7 @@ for_window [title="Netflix"] floating enable
 for_window [title="Welcome to Prime Video"] floating enable 
 
 bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
 
 bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/$(date)"
 bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Pictures/$(date)"

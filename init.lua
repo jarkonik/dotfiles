@@ -92,6 +92,7 @@ require("lazy").setup({
 			require("guess-indent").setup({})
 		end,
 	},
+	"onsails/lspkind.nvim",
 })
 
 local wk = require("which-key")
@@ -150,9 +151,9 @@ local function on_attach(client, buffer)
 	}, { prefix = "<leader>" })
 
 	-- TODO: Register all in which-key
-	vim.keymap.set("n", "gD", vim.lsp.buf.implementation, keymap_opts)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, keymap_opts)
 	vim.keymap.set("n", "<c-k>", vim.lsp.buf.signature_help, keymap_opts)
-	vim.keymap.set("n", "1gD", vim.lsp.buf.type_definition, keymap_opts)
+	vim.keymap.set("n", "gD", vim.lsp.buf.type_definition, keymap_opts)
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, keymap_opts)
 	vim.keymap.set("n", "g0", vim.lsp.buf.document_symbol, keymap_opts)
 	vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, keymap_opts)
@@ -188,7 +189,12 @@ require("rust-tools").setup({
 
 -- Completion
 local cmp = require("cmp")
+local lspkind = require("lspkind")
+
 cmp.setup({
+	formatting = {
+		format = lspkind.cmp_format({}),
+	},
 	snippet = {
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body)
@@ -249,6 +255,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		then
 			vim.cmd("confirm quit")
 		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
+	pattern = "term://*",
+	callback = function()
+		vim.cmd("set bufhidden=delete")
+		vim.cmd("set nobl")
+		vim.cmd("PinBuffer")
 	end,
 })
 
