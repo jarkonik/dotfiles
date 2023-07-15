@@ -52,7 +52,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Return exec kitty
 
 # kill focused window
-bindsym $mod+Shift+q [con_id="__focused__" class="^(?!thunderbird|Caprine|discord|Alacritty).*$"] kill
+bindsym $mod+Shift+q [con_id="__focused__" class="^(?!thunderbird|Caprine|discord|Spotify).*$"] kill
 
 # start dmenu (a program launcher)
 # A more modern dmenu replacement is rofi:
@@ -218,7 +218,7 @@ for_window [class="(?i)*nextcloud*"] floating disable
 for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px
 no_focus [class="plasmashell" window_type="notification"]
 
-for_window [class="Spotify"] floating enable
+for_window [class="Spotify"] floating enable 
 for_window [class="Bitwarden"] floating enable
 for_window [class="steam"] floating enable
 for_window [class="dolphin"] floating enable 
