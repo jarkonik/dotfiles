@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:FiraCode Nerd Font" 15
+font pango:FiraCode Nerd Font 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -172,15 +172,23 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Window color settings
-# class                 border  backgr. text    indicator
-client.focused          #81a1c1 #81a1c1 #ffffff #81a1c1
-client.unfocused        #2e3440 #1f222d #888888 #1f222d
-client.focused_inactive #2e3440 #1f222d #888888 #1f222d
-client.placeholder      #2e3440 #1f222d #888888 #1f222d
-client.urgent           #900000 #900000 #ffffff #900000
+# set primary gruvbox colorscheme colors
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
 
-client.background       #242424
+# green gruvbox
+# class                 border|backgr|text|indicator|child_border
+client.focused          $green $green $darkgray $purple $darkgray
+client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
+client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
+client.urgent           $red $red $white $red $red
 
 # bar {
 #   position top

@@ -65,7 +65,6 @@ require("lazy").setup({
 	"nvim-telescope/telescope.nvim",
 	"nvim-lualine/lualine.nvim",
 	"ojroques/nvim-osc52",
-	{ "EdenEast/nightfox.nvim" },
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -93,7 +92,12 @@ require("lazy").setup({
 		end,
 	},
 	"onsails/lspkind.nvim",
+	"edluffy/hologram.nvim",
+	"xiyaowong/transparent.nvim",
+	"ellisonleao/gruvbox.nvim",
 })
+
+require("transparent").setup()
 
 local wk = require("which-key")
 
@@ -108,6 +112,7 @@ require("gitsigns").setup()
 
 -- Vim options
 vim.cmd("autocmd FileType qf set nobuflisted")
+vim.g.transparent_enabled = true
 vim.o.hidden = true
 vim.wo.number = true
 vim.o.wrap = false
@@ -115,7 +120,7 @@ vim.g.mapleader = ","
 vim.wo.signcolumn = "yes" -- prevents jitter
 vim.opt.updatetime = 100
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd("colorscheme nightfox")
+vim.cmd("colorscheme gruvbox")
 -- Set completeopt to have a better completion experience
 -- :help completeopt
 -- menuone: popup even when there's only one match
@@ -265,6 +270,14 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		vim.cmd("set bufhidden=delete")
 		vim.cmd("set nobl")
 		vim.cmd("PinBuffer")
+	end,
+})
+
+vim.api.nvim_create_autocmd("TermClose", {
+	group = vim.api.nvim_create_augroup("UnpinTerminal", { clear = true }),
+	pattern = "term://*",
+	callback = function()
+		vim.cmd("Unpin")
 	end,
 })
 
