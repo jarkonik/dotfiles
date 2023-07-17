@@ -46,13 +46,13 @@ floating_modifier $mod
 
 # move tiling windows via drag & drop by left-clicking into the title bar,
 # or left-clicking anywhere into the window while holding the floating modifier.
-tiling_drag modifier titlebar
+# tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec kitty
 
 # kill focused window
-bindsym $mod+Shift+q [con_id="__focused__" class="^(?!thunderbird|Caprine|discord|Spotify).*$"] kill
+bindsym $mod+Shift+q [con_id="__focused__" title="^(?!Messenger).*$" class="^(?!thunderbird|Caprine|discord|Spotify).*$"] kill
 
 # start dmenu (a program launcher)
 # A more modern dmenu replacement is rofi:
@@ -231,6 +231,7 @@ for_window [class="Bitwarden"] floating enable
 for_window [class="steam"] floating enable
 for_window [class="dolphin"] floating enable 
 for_window [class="Caprine"] floating enable move scratchpad
+for_window [title="Messenger"] floating enable move scratchpad
 for_window [class="discord"] floating enable move scratchpad
 for_window [class="thunderbird"] floating enable move scratchpad
 for_window [class="Slack"] floating enable move scratchpad

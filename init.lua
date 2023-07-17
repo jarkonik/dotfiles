@@ -95,6 +95,11 @@ require("lazy").setup({
 	"edluffy/hologram.nvim",
 	"xiyaowong/transparent.nvim",
 	"ellisonleao/gruvbox.nvim",
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		opts = { winbar = { enabled = true }, shade_terminals = false, start_in_insert = true },
+	},
 })
 
 require("transparent").setup()
@@ -263,16 +268,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("TermOpen", {
-	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
-	pattern = "term://*",
-	callback = function()
-		vim.cmd("set bufhidden=delete")
-		vim.cmd("set nobl")
-		vim.cmd("PinBuffer")
-	end,
-})
-
+-- vim.api.nvim_create_autocmd("TermOpen", {
+-- 	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
+-- 	pattern = "term://*",
+-- 	callback = function()
+-- 		vim.cmd("set bufhidden=delete")
+-- 		vim.cmd("set nobl")
+-- 		vim.cmd("PinBuffer")
+-- 	end,
+-- })
+--
 vim.api.nvim_create_autocmd("TermClose", {
 	group = vim.api.nvim_create_augroup("UnpinTerminal", { clear = true }),
 	pattern = "term://*",
