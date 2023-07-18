@@ -307,9 +307,21 @@ require("scope").setup({
 local telescope_builtin = require("telescope.builtin")
 
 wk.register({
-	e = {
+	c = {
 		name = "Edit",
-		c = { "<cmd>e ~/src/dotfiles/init.lua<CR>", "Edit config" },
+		e = { "<cmd>e ~/src/dotfiles/init.lua<CR>", "Edit config" },
+		u = {
+			function()
+				os.execute('git -C ~/src/dotfiles commit -am "update" && git -C ~/src/dotfiles push')
+			end,
+			"Upload config",
+		},
+		d = {
+			function()
+				os.execute("git -C ~/src/dotfiles pull")
+			end,
+			"Download config",
+		},
 	},
 	n = {
 		name = "New",
@@ -342,7 +354,6 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
-vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>", {})
 vim.keymap.set("n", "<c-p>", telescope_builtin.find_files, {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {})
 vim.keymap.set("n", "<c-c>", function()
