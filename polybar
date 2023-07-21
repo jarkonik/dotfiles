@@ -17,13 +17,25 @@
 ;==========================================================
 
 [colors]
-background = #282A2E
-background-alt = #373B41
-foreground = #C5C8C6
-primary = #F0C674
-secondary = #8ABEB7
-alert = #A54242
-disabled = #707880
+# background = #282A2E
+# background-alt = #373B41
+# foreground = #C5C8C6
+# primary = #F0C674
+# secondary = #8ABEB7
+# alert = #A54242
+# disabled = #707880
+
+background = #282828
+foreground = #ebdbb2
+red        = #fb4934
+green      = #b8bb26
+yellow     = #fabd2f
+blue       = #83a598
+purple     = #d3869b
+teal       = #8ec07c
+orange     = #fe8019
+gray       = #a89984
+
 
 [bar/example]
 width = 100%
