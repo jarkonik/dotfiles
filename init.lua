@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -107,7 +107,13 @@ require("lazy").setup({
 		-- to make sure all required plugins and colorschemes are loaded before setup
 		-- event = "UiEnter",
 	},
+	{
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	},
 })
+
+require("lualine").setup()
 
 -- Terminal tabs
 local conditions = require("heirline.conditions")
@@ -196,7 +202,11 @@ local BufferLine = {
 	end,
 	utils.make_buflist(TablineBufferBlock),
 }
-require("heirline").setup({ winbar = { BufferLine, TerminalLine } })
+require("heirline").setup({
+	winbar = { TerminalLine },
+	statusline = { TerminalLine },
+	tabline = { BufferLine },
+})
 
 require("overseer").setup()
 
@@ -219,6 +229,7 @@ vim.g.transparent_enabled = true
 vim.o.hidden = true
 vim.wo.number = true
 vim.o.wrap = false
+vim.o.showtabline = 2
 vim.g.mapleader = ","
 vim.wo.signcolumn = "yes" -- prevents jitter
 vim.opt.updatetime = 100
@@ -253,7 +264,6 @@ local function on_attach(client, buffer)
 	wk.register({
 		w = {
 			name = "Word",
-			h = { vim.lsp.buf.hover, "LSP Hover" },
 			r = { vim.lsp.buf.rename, "Rename" },
 		},
 	}, { prefix = "<leader>" })
@@ -267,6 +277,7 @@ local function on_attach(client, buffer)
 	vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, keymap_opts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, keymap_opts)
+	vim.keymap.set("n", "gh", vim.lsp.buf.hover, keymap_opts)
 	vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, keymap_opts)
 	vim.keymap.set("n", "g]", vim.diagnostic.goto_next, keymap_opts)
 end
@@ -357,9 +368,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		local layout = vim.api.nvim_call_function("winlayout", {})
 		if
-		    layout[1] == "leaf"
-		    and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
-		    and layout[3] == nil
+			layout[1] == "leaf"
+			and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
+			and layout[3] == nil
 		then
 			vim.cmd("confirm quit")
 		end
