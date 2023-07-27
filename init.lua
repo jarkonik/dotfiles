@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -94,11 +94,6 @@ require("lazy").setup({
 	"xiyaowong/transparent.nvim",
 	"ellisonleao/gruvbox.nvim",
 	{
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		opts = { winbar = { enabled = true }, shade_terminals = false, start_in_insert = true },
-	},
-	{
 		"williamboman/mason.nvim",
 		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
 	},
@@ -117,7 +112,7 @@ require("lazy").setup({
 -- Terminal tabs
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
-heirline = require("heirline")
+local heirline = require("heirline")
 local colors = {
 	bright_bg = utils.get_highlight("Folded").bg,
 	bright_fg = utils.get_highlight("Folded").fg,
@@ -162,7 +157,7 @@ local TablineFileNameBlock = {
 		end
 	end,
 	on_click = {
-		callback = function(_, minwid, _, button)
+		callback = function(_, minwid, _, _)
 			vim.api.nvim_win_set_buf(0, minwid)
 		end,
 		minwid = function(self)
@@ -196,12 +191,12 @@ local TerminalLine = {
 local BufferLine = {
 	condition = function()
 		return not conditions.buffer_matches({
-			buftype = { "terminal" },
+			buftype = { "terminal", "nofile" },
 		})
 	end,
 	utils.make_buflist(TablineBufferBlock),
 }
-require("heirline").setup({ winbar = { TerminalLine, BufferLine } })
+require("heirline").setup({ winbar = { BufferLine, TerminalLine } })
 
 require("overseer").setup()
 
@@ -245,8 +240,8 @@ local function on_attach(client, buffer)
 			callback = function()
 				vim.lsp.buf.format({
 					async = false,
-					filter = function(client)
-						return client.name ~= "tsserver"
+					filter = function(cl)
+						return cl.name ~= "tsserver"
 					end,
 				})
 			end,
@@ -362,9 +357,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		local layout = vim.api.nvim_call_function("winlayout", {})
 		if
-			layout[1] == "leaf"
-			and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
-			and layout[3] == nil
+		    layout[1] == "leaf"
+		    and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree"
+		    and layout[3] == nil
 		then
 			vim.cmd("confirm quit")
 		end
@@ -410,7 +405,7 @@ local telescope_builtin = require("telescope.builtin")
 
 wk.register({
 	c = {
-		name = "Edit",
+		name = "Config",
 		e = { "<cmd>e ~/src/dotfiles/init.lua<CR>", "Edit config" },
 		u = {
 			function()
@@ -456,6 +451,7 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
+vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>", {})
 vim.keymap.set("n", "<c-o>", "<cmd>BufferLinePick<CR>", {})
 vim.keymap.set("n", "<c-p>", telescope_builtin.find_files, {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {})
@@ -463,7 +459,7 @@ vim.keymap.set("n", "<c-c>", function()
 	if vim.bo.buftype ~= "nofile" and vim.bo.buftype ~= "terminal" then
 		require("bufdelete").bufdelete(0, false)
 	end
-end, keymap_opts)
+end, {})
 
 -- LSP Config
 require("lspconfig").tsserver.setup({})
@@ -474,6 +470,16 @@ require("lspconfig").gdscript.setup({
 require("lspconfig").ruby_ls.setup({
 	cmd = { "bundle", "exec", "ruby-lsp" },
 	on_attach = on_attach,
+})
+require("lspconfig").lua_ls.setup({
+	settings = {
+		Lua = {
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim" },
+			},
+		},
+	},
 })
 require("lspconfig").solargraph.setup({
 	cmd = { "bundle", "exec", "solargraph", "stdio" },
@@ -524,3 +530,10 @@ require("nvim-treesitter.configs").setup({
 
 -- Tests
 vim.g["test#strategy"] = "neovim"
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = vim.fn.expand("~") .. "/notes/*",
+	callback = function()
+		vim.fn.jobstart('git add . && git -C ~/notes commit -am "update" && git -C ~/notes push')
+	end,
+})

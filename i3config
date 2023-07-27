@@ -192,10 +192,10 @@ set $darkgray #1d2021
 
 # green gruvbox
 # class                 border|backgr|text|indicator|child_border
-client.focused          $aqau $aqua $darkgray $purple $aqua
-client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
-client.unfocused        $red $darkgray $yellow $purple $darkgray
-client.urgent           $red $red $white $red $red
+client.focused          $aqua $aqua $aqua $aqua $aqua
+client.focused_inactive $darkgray $darkgray $darkgray $darkgray $darkgray
+client.unfocused        $darkgray $darkgray $darkgray $darkgray $darkgray
+client.urgent           $red $red $red $red $red
 
 bar {
     i3bar_command i3bar --transparency
@@ -224,10 +224,11 @@ exec_always --no-startup-id xset dpms 180 360 720
 
 # bindsym $mod+d exec "dmenu_run -l 10 -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'FiraCode Nerd Font-20' -p 'run:'"
 
-exec feh --bg-fill ~/Pictures/wallpaper.jpg
+exec_always feh --bg-fill ~/Pictures/wallpaper.jpg
 for_window [instance="Godot_Engine"] floating enable
 for_window [title="Desktop @ QRect(0,0 3840x1200)  — Plasma"] kill, floating enable, border none
 for_window [class="plasmashell"] floating enable
+for_window [title="Bevy App"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Plasma"] floating enable, border none
 for_window [title="plasma-desktop"] floating enable, border none
