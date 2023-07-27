@@ -39,7 +39,6 @@ require("lazy").setup({
 	},
 	{ "j-hui/fidget.nvim", tag = "legacy" },
 	"terrortylor/nvim-comment",
-	{ "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
 	"petertriho/nvim-scrollbar",
 	{
 		"nvim-tree/nvim-tree.lua",
@@ -63,7 +62,6 @@ require("lazy").setup({
 	"nvim-lua/popup.nvim",
 	"nvim-lua/plenary.nvim",
 	"nvim-telescope/telescope.nvim",
-	"nvim-lualine/lualine.nvim",
 	"ojroques/nvim-osc52",
 	{
 		"kylechui/nvim-surround",
@@ -100,7 +98,112 @@ require("lazy").setup({
 		version = "*",
 		opts = { winbar = { enabled = true }, shade_terminals = false, start_in_insert = true },
 	},
+	{
+		"williamboman/mason.nvim",
+		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+	},
+	{
+		"stevearc/overseer.nvim",
+		opts = {},
+	},
+	{
+		"rebelot/heirline.nvim",
+		-- You can optionally lazy-load heirline on UiEnter
+		-- to make sure all required plugins and colorschemes are loaded before setup
+		-- event = "UiEnter",
+	},
 })
+
+-- Terminal tabs
+local conditions = require("heirline.conditions")
+local utils = require("heirline.utils")
+heirline = require("heirline")
+local colors = {
+	bright_bg = utils.get_highlight("Folded").bg,
+	bright_fg = utils.get_highlight("Folded").fg,
+	red = utils.get_highlight("DiagnosticError").fg,
+	dark_red = utils.get_highlight("DiffDelete").bg,
+	green = utils.get_highlight("String").fg,
+	blue = utils.get_highlight("Function").fg,
+	gray = utils.get_highlight("NonText").fg,
+	orange = utils.get_highlight("Constant").fg,
+	purple = utils.get_highlight("Statement").fg,
+	cyan = utils.get_highlight("Special").fg,
+	diag_warn = utils.get_highlight("DiagnosticWarn").fg,
+	diag_error = utils.get_highlight("DiagnosticError").fg,
+	diag_hint = utils.get_highlight("DiagnosticHint").fg,
+	diag_info = utils.get_highlight("DiagnosticInfo").fg,
+	git_del = utils.get_highlight("diffDeleted").fg,
+	git_add = utils.get_highlight("diffAdded").fg,
+	git_change = utils.get_highlight("diffChanged").fg,
+}
+heirline.load_colors(colors)
+local TablineFileName = {
+	provider = function(self)
+		-- self.filename will be defined later, just keep looking at the example!
+		local filename = self.filename
+		filename = filename == "" and "[No Name]" or vim.fn.fnamemodify(filename, ":t")
+		return filename
+	end,
+	hl = function(self)
+		return { bold = self.is_active or self.is_visible, italic = true }
+	end,
+}
+
+local TablineFileNameBlock = {
+	init = function(self)
+		self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+	end,
+	hl = function(self)
+		if self.is_active then
+			return "TabLineSel"
+		else
+			return "TabLine"
+		end
+	end,
+	on_click = {
+		callback = function(_, minwid, _, button)
+			vim.api.nvim_win_set_buf(0, minwid)
+		end,
+		minwid = function(self)
+			return self.bufnr
+		end,
+		name = "termline_buffer_callback",
+	},
+	TablineFileName,
+}
+local TablineBufferBlock = utils.surround({ "", "" }, function(self)
+	if self.is_active then
+		return utils.get_highlight("TabLineSel").bg
+	else
+		return utils.get_highlight("TabLine").bg
+	end
+end, { TablineFileNameBlock })
+local function get_terminal_bufs()
+	return vim.tbl_filter(function(bufnr)
+		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
+	end, vim.api.nvim_list_bufs())
+end
+
+local TerminalLine = {
+	condition = function()
+		return conditions.buffer_matches({
+			buftype = { "terminal" },
+		})
+	end,
+	utils.make_buflist(TablineBufferBlock, nil, nil, get_terminal_bufs),
+}
+local BufferLine = {
+	condition = function()
+		return not conditions.buffer_matches({
+			buftype = { "terminal" },
+		})
+	end,
+	utils.make_buflist(TablineBufferBlock),
+}
+require("heirline").setup({ winbar = { TerminalLine, BufferLine } })
+
+require("overseer").setup()
 
 require("transparent").setup()
 
@@ -268,16 +371,15 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
--- vim.api.nvim_create_autocmd("TermOpen", {
--- 	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
--- 	pattern = "term://*",
--- 	callback = function()
--- 		vim.cmd("set bufhidden=delete")
--- 		vim.cmd("set nobl")
--- 		vim.cmd("PinBuffer")
--- 	end,
--- })
---
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
+	pattern = "term://*",
+	callback = function()
+		vim.cmd("set bufhidden=delete")
+		vim.cmd("set nobl")
+		vim.cmd("PinBuftype")
+	end,
+})
 vim.api.nvim_create_autocmd("TermClose", {
 	group = vim.api.nvim_create_augroup("UnpinTerminal", { clear = true }),
 	pattern = "term://*",
@@ -290,13 +392,13 @@ vim.api.nvim_create_autocmd("TermClose", {
 require("nvim_comment").setup()
 
 -- Buffer line
-require("bufferline").setup({
-	options = {
-		close_command = false,
-		show_buffer_close_icons = false,
-		right_mouse_command = "",
-	},
-})
+-- require("bufferline").setup({
+-- 	options = {
+-- 		close_command = false,
+-- 		show_buffer_close_icons = false,
+-- 		right_mouse_command = "",
+-- 	},
+-- })
 
 -- Scope
 require("scope").setup({
@@ -354,6 +456,7 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
+vim.keymap.set("n", "<c-o>", "<cmd>BufferLinePick<CR>", {})
 vim.keymap.set("n", "<c-p>", telescope_builtin.find_files, {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {})
 vim.keymap.set("n", "<c-c>", function()
@@ -364,6 +467,7 @@ end, keymap_opts)
 
 -- LSP Config
 require("lspconfig").tsserver.setup({})
+require("lspconfig").zls.setup({})
 require("lspconfig").gdscript.setup({
 	on_attach = on_attach,
 })
@@ -386,11 +490,11 @@ null_ls.setup({
 	on_attach = on_attach,
 })
 
+-- Install LSPs
+require("mason").setup()
+
 -- Scroll bar
 require("scrollbar").setup()
-
--- Status line
-require("lualine").setup()
 
 -- OSC52 copy/paste
 local function copy(lines, _)
@@ -399,6 +503,7 @@ end
 local function paste()
 	return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
 end
+vim.o.clipboard = "unnamedplus"
 vim.g.clipboard = {
 	name = "osc52",
 	copy = { ["+"] = copy, ["*"] = copy },

@@ -38,8 +38,8 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 # set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
@@ -56,7 +56,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec kitty
-bindsym $mod+backslash exec code
+bindsym $mod+backslash exec codium
 
 # kill focused window
 bindsym $mod+Shift+q [con_id="__focused__" title="^(?!Messenger).*$" class="^(?!thunderbird|Caprine|discord|Spotify).*$"] kill
@@ -192,7 +192,7 @@ set $darkgray #1d2021
 
 # green gruvbox
 # class                 border|backgr|text|indicator|child_border
-client.focused          $green $green $darkgray $purple $green
+client.focused          $aqau $aqua $darkgray $purple $aqua
 client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
 client.unfocused        $red $darkgray $yellow $purple $darkgray
 client.urgent           $red $red $white $red $red
@@ -269,8 +269,8 @@ bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t ima
 bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
 
-default_border pixel 5
-default_floating_border pixel 5
+default_border pixel 6
+default_floating_border pixel 6
 
 smart_borders on
 

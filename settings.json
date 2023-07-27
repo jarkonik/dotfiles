@@ -5,7 +5,9 @@
     "bash": {
       "path": "bash",
       "icon": "terminal-bash",
-      "args": ["--login"]
+      "args": [
+        "--login"
+      ]
     },
   },
   "editor.fontLigatures": true,
@@ -13,9 +15,6 @@
     "<C-w>": false
   },
   "editor.fontFamily": "FiraCode Nerd Font",
-  "yaml.schemas": {
-    "file:///home/jaroslaw/.vscode-oss/extensions/atlassian.atlascode-3.0.2-universal/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-  },
   "git.autofetch": true,
   "editor.formatOnSave": true,
   "terminal.integrated.confirmOnExit": "always",
@@ -27,11 +26,6 @@
   },
   "workbench.editor.enablePreview": false,
   "diffEditor.renderSideBySide": false,
-  "sshfs.configs": [
-    {
-      "name": "proest"
-    }
-  ],
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
   "terminal.integrated.scrollback": 10000,
@@ -49,13 +43,10 @@
   "editor.minimap.enabled": false,
   "editor.renderWhitespace": "all",
   "window.menuBarVisibility": "toggle",
-  "git.showActionButton": {
-    "commit": false,
-    "publish": false,
-    "sync": false
-  },
-  "git.showCommitInput": false,
-  "workbench.activityBar.visible": false,
-  "sync.gist": "ee2019552f59482a09ee3328c3a30c26",
-  "glassit.alpha": 220,
+  "workbench.startupEditor": "none",
+  "zenMode.fullScreen": false,
+  "zenMode.centerLayout": false,
+  "editor.rulers": [
+    80
+  ]
 }
