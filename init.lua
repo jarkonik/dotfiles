@@ -35,7 +35,9 @@ require("lazy").setup({
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {},
+		opts = {
+			auto_open = true,
+		},
 	},
 	{ "j-hui/fidget.nvim", tag = "legacy" },
 	"terrortylor/nvim-comment",
@@ -111,6 +113,15 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 	},
+	{
+		"folke/zen-mode.nvim",
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+	},
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 })
 
 require("lualine").setup()
@@ -195,11 +206,6 @@ local TerminalLine = {
 	utils.make_buflist(TablineBufferBlock, nil, nil, get_terminal_bufs),
 }
 local BufferLine = {
-	condition = function()
-		return not conditions.buffer_matches({
-			buftype = { "terminal", "nofile" },
-		})
-	end,
 	utils.make_buflist(TablineBufferBlock),
 }
 require("heirline").setup({
@@ -227,8 +233,10 @@ require("gitsigns").setup()
 vim.cmd("autocmd FileType qf set nobuflisted")
 vim.g.transparent_enabled = true
 vim.o.hidden = true
+vim.cmd("autocmd FileType markdown setlocal fo+=a")
 vim.wo.number = true
 vim.o.wrap = false
+vim.o.colorcolumn = "80"
 vim.o.showtabline = 2
 vim.g.mapleader = ","
 vim.wo.signcolumn = "yes" -- prevents jitter
@@ -381,30 +389,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
 	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
 	pattern = "term://*",
 	callback = function()
-		vim.cmd("set bufhidden=delete")
 		vim.cmd("set nobl")
 		vim.cmd("PinBuftype")
-	end,
-})
-vim.api.nvim_create_autocmd("TermClose", {
-	group = vim.api.nvim_create_augroup("UnpinTerminal", { clear = true }),
-	pattern = "term://*",
-	callback = function()
-		vim.cmd("Unpin")
 	end,
 })
 
 -- Comments
 require("nvim_comment").setup()
-
--- Buffer line
--- require("bufferline").setup({
--- 	options = {
--- 		close_command = false,
--- 		show_buffer_close_icons = false,
--- 		right_mouse_command = "",
--- 	},
--- })
 
 -- Scope
 require("scope").setup({
@@ -473,6 +464,7 @@ vim.keymap.set("n", "<c-c>", function()
 end, {})
 
 -- LSP Config
+require("lspconfig").pylsp.setup({})
 require("lspconfig").tsserver.setup({})
 require("lspconfig").zls.setup({})
 require("lspconfig").gdscript.setup({
@@ -546,5 +538,19 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = vim.fn.expand("~") .. "/notes/*",
 	callback = function()
 		vim.fn.jobstart('git add . && git -C ~/notes commit -am "update" && git -C ~/notes push')
+	end,
+})
+
+vim.api.nvim_create_autocmd("TermClose", {
+	callback = function()
+		local buf = vim.api.nvim_get_current_buf()
+		local newbuf = vim.api.nvim_create_buf(false, true)
+		local windows = vim.fn.getwininfo()
+		for _, i in ipairs(windows) do
+			if i.bufnr == buf then
+				vim.api.nvim_win_set_buf(i.winid, newbuf)
+			end
+		end
+		vim.api.nvim_buf_delete(buf, {})
 	end,
 })

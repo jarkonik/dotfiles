@@ -257,6 +257,7 @@ for_window [title="Overview – Home Assistant"] floating enable
 for_window [title="Outlook"] floating enable
 for_window [title="Netflix"] floating enable
 for_window [title="Welcome to Prime Video"] floating enable
+for_window [title="floating_window"] floating enable
 
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
@@ -276,3 +277,6 @@ default_floating_border pixel 6
 smart_borders on
 
 gaps inner 20
+
+no_focus [all]
+focus_on_window_activation none
