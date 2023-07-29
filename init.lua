@@ -445,6 +445,10 @@ wk.register({
 		name = "Refresh",
 		d = { vim.diagnostic.reset, "Refresh diagnostic" },
 	},
+	e = {
+		name = "Eval",
+		r = { "w !ruby", "Ruby" },
+	},
 	b = {
 		name = "Buffer",
 		p = { "<cmd>PinBuffer<CR>", "Pin buffer" },
