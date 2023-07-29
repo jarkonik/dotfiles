@@ -13,10 +13,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- https://github.com/nvim-neotest/neotest
 -- https://github.com/nvim-neorg/neorg
--- https://github.com/ggandor/leap.nvim
 -- https://github.com/michaelb/sniprun
 -- https://github.com/iamcco/markdown-preview.nvim
--- https://github.com/mrjones2014/legendary.nvim
 
 require("lazy").setup({
 	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
@@ -477,7 +475,7 @@ wk.register({
 	},
 	e = {
 		name = "Eval",
-		r = { "w !ruby", "Ruby" },
+		r = { "<cmd>w !ruby<cr>", "Ruby" },
 	},
 	b = {
 		name = "Buffer",
