@@ -122,6 +122,7 @@ require("lazy").setup({
 		},
 	},
 	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
+	"nvim-pack/nvim-spectre",
 })
 
 require("lualine").setup()
@@ -194,6 +195,14 @@ end, { TablineFileNameBlock })
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+	end, vim.api.nvim_list_bufs())
+end
+
+local function get_non_terminal_bufs()
+	return vim.tbl_filter(function(bufnr)
+		return vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -206,7 +215,7 @@ local TerminalLine = {
 	utils.make_buflist(TablineBufferBlock, nil, nil, get_terminal_bufs),
 }
 local BufferLine = {
-	utils.make_buflist(TablineBufferBlock),
+	utils.make_buflist(TablineBufferBlock, nil, nil, get_non_terminal_bufs),
 }
 require("heirline").setup({
 	winbar = { TerminalLine },
@@ -389,7 +398,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
 	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
 	pattern = "term://*",
 	callback = function()
-		vim.cmd("set nobl")
 		vim.cmd("PinBuftype")
 	end,
 })
@@ -422,6 +430,10 @@ wk.register({
 			"Download config",
 		},
 	},
+	d = {
+		name = "Debug",
+		c = { require("dap").continue, "Continue" },
+	},
 	n = {
 		name = "New",
 		t = { "<cmd>terminal<CR>", "New Terminal" },
@@ -432,6 +444,7 @@ wk.register({
 		g = { telescope_builtin.live_grep, "Grep" },
 		b = { telescope_builtin.buffers, "Find buffers" },
 		h = { telescope_builtin.help_tags, "Find help tags" },
+		r = { require("spectre").toggle, "Replace" },
 	},
 	t = {
 		name = "Tree",
@@ -450,6 +463,23 @@ wk.register({
 		name = "Buffer",
 		p = { "<cmd>PinBuffer<CR>", "Pin buffer" },
 		u = { "<cmd>Unpin<CR>", "Unpin buffer" },
+		d = {
+			name = "Delete",
+			o = {
+				function()
+					local current_buf_nr = vim.fn.bufnr()
+					local all = vim.tbl_filter(function(bufnr)
+						return current_buf_nr ~= bufnr
+							and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+							and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+					end, vim.api.nvim_list_bufs())
+					for _, bufnr in ipairs(all) do
+						require("bufdelete").bufdelete(bufnr, false)
+					end
+				end,
+				"Delete others",
+			},
+		},
 	},
 }, { prefix = "<leader>" })
 
@@ -554,3 +584,58 @@ vim.api.nvim_create_autocmd("TermClose", {
 		vim.api.nvim_buf_delete(buf, {})
 	end,
 })
+
+local dap = require("dap")
+dap.adapters.lldb = {
+	type = "executable",
+	command = "/usr/bin/lldb-vscode", -- adjust as needed, must be absolute path
+	name = "lldb",
+}
+vim.keymap.set("n", "gb", dap.toggle_breakpoint, {})
+
+dap.configurations.rust = {
+	{
+		-- initCommands = function()
+		-- 	-- Find out where to look for the pretty printer Python module
+		-- 	local rustc_sysroot = vim.fn.trim(vim.fn.system("rustc --print sysroot"))
+		--
+		-- 	local script_import = 'command script import "' .. rustc_sysroot .. '/lib/rustlib/etc/lldb_lookup.py"'
+		-- 	local commands_file = rustc_sysroot .. "/lib/rustlib/etc/lldb_commands"
+		--
+		-- 	local commands = {}
+		-- 	local file = io.open(commands_file, "r")
+		-- 	if file then
+		-- 		for line in file:lines() do
+		-- 			table.insert(commands, line)
+		-- 		end
+		-- 		file:close()
+		-- 	end
+		-- 	table.insert(commands, 1, script_import)
+		--
+		-- 	return commands
+		-- end,
+		name = "Launch",
+		type = "lldb",
+		request = "launch",
+		program = function()
+			vim.fn.jobstart("cargo build")
+			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+		end,
+		cwd = "${workspaceFolder}",
+		stopOnEntry = false,
+		args = {},
+
+		-- 💀
+		-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+		--
+		--    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+		--
+		-- Otherwise you might get the following error:
+		--
+		--    Error on launch: Failed to attach to the target process
+		--
+		-- But you should be aware of the implications:
+		-- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+		runInTerminal = true,
+	},
+}
