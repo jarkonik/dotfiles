@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -36,7 +36,7 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
-			auto_open = true,
+			auto_open = false,
 		},
 	},
 	{ "j-hui/fidget.nvim", tag = "legacy" },
@@ -121,9 +121,9 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
-	{ "ellisonleao/glow.nvim", config = true,                         cmd = "Glow" },
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 	"nvim-pack/nvim-spectre",
-	{ "rcarriga/nvim-dap-ui",  requires = { "mfussenegger/nvim-dap" } },
+	{ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } },
 	{
 		"nvim-neorg/neorg",
 		build = ":Neorg sync-parsers",
@@ -144,30 +144,7 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{
-		"phaazon/hop.nvim",
-		branch = "v2", -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-		end,
-	},
 })
-
-local hop = require("hop")
-local directions = require("hop.hint").HintDirection
-vim.keymap.set("", "f", function()
-	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false })
-end, { remap = true })
-vim.keymap.set("", "F", function()
-	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false })
-end, { remap = true })
-vim.keymap.set("", "t", function()
-	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false, hint_offset = -1 })
-end, { remap = true })
-vim.keymap.set("", "T", function()
-	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = false, hint_offset = 1 })
-end, { remap = true })
 
 require("dapui").setup()
 
@@ -241,14 +218,14 @@ end, { TablineFileNameBlock })
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
 local function get_non_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -478,6 +455,7 @@ wk.register({
 		g = { telescope_builtin.live_grep, "Grep" },
 		b = { telescope_builtin.buffers, "Find buffers" },
 		h = { telescope_builtin.help_tags, "Find help tags" },
+		d = { telescope_builtin.diagnostics, "List diagnostics" },
 		r = { require("spectre").toggle, "Replace" },
 	},
 	t = {
@@ -537,8 +515,8 @@ wk.register({
 					local current_buf_nr = vim.fn.bufnr()
 					local all = vim.tbl_filter(function(bufnr)
 						return current_buf_nr ~= bufnr
-						    and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-						    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+							and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+							and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 					end, vim.api.nvim_list_bufs())
 					for _, bufnr in ipairs(all) do
 						require("bufdelete").bufdelete(bufnr, false)
