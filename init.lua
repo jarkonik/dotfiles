@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -121,9 +121,9 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
-	{ "ellisonleao/glow.nvim", config = true,                         cmd = "Glow" },
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 	"nvim-pack/nvim-spectre",
-	{ "rcarriga/nvim-dap-ui",  requires = { "mfussenegger/nvim-dap" } },
+	{ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } },
 	{
 		"nvim-neorg/neorg",
 		build = ":Neorg sync-parsers",
@@ -218,14 +218,14 @@ end, { TablineFileNameBlock })
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
 local function get_non_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -271,6 +271,7 @@ vim.o.wrap = false
 vim.o.colorcolumn = "80"
 vim.o.showtabline = 2
 vim.g.mapleader = ","
+vim.g.maplocalleader = "."
 vim.wo.signcolumn = "yes" -- prevents jitter
 vim.opt.updatetime = 100
 vim.o.background = "dark" -- or "light" for light mode
@@ -492,6 +493,16 @@ wk.register({
 		name = "Eval",
 		r = { "<cmd>w !ruby<cr>", "Ruby" },
 	},
+	o = {
+		name = "Organizer",
+		i = { "<cmd>Neorg<cr>", "Index" },
+		n = { "<cmd>Neorg workspace notes<cr>", "Notes" },
+		j = {
+			name = "Journal",
+			t = { "<cmd>Neorg journal today<cr>", "Today" },
+			i = { "<cmd>Neorg journal toc<cr>", "Index" },
+		},
+	},
 	b = {
 		name = "Buffer",
 		p = { "<cmd>PinBuffer<CR>", "Pin buffer" },
@@ -503,8 +514,8 @@ wk.register({
 					local current_buf_nr = vim.fn.bufnr()
 					local all = vim.tbl_filter(function(bufnr)
 						return current_buf_nr ~= bufnr
-						    and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-						    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+							and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+							and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 					end, vim.api.nvim_list_bufs())
 					for _, bufnr in ipairs(all) do
 						require("bufdelete").bufdelete(bufnr, false)
