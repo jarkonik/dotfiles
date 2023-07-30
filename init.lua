@@ -11,11 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- https://github.com/nvim-neotest/neotest
--- https://github.com/nvim-neorg/neorg
--- https://github.com/michaelb/sniprun
--- https://github.com/iamcco/markdown-preview.nvim
-
 require("lazy").setup({
 	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
