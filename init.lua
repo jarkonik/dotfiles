@@ -434,7 +434,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 				if process_name ~= "" then
 					vim.api.nvim_buf_set_name(bufnr, bufnr .. " " .. process_name)
 				else
-					vim.api.nvim_buf_set_name(bufnr, bufnr)
+					vim.api.nvim_buf_set_name(bufnr, tostring(bufnr))
 				end
 			end)
 		end)
