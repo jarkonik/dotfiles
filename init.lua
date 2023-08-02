@@ -432,9 +432,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 				local process_name = table.concat(words, " ")
 				if process_name ~= "" then
-					vim.api.nvim_buf_set_name(bufnr, process_name)
+					vim.api.nvim_buf_set_name(bufnr, bufnr .. " " .. process_name)
 				else
-					vim.api.nvim_buf_set_name(bufnr, "Terminal " .. bufnr)
+					vim.api.nvim_buf_set_name(bufnr, bufnr)
 				end
 			end)
 		end)
