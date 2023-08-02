@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -121,9 +121,9 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
-	{ "ellisonleao/glow.nvim", config = true,                         cmd = "Glow" },
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 	"nvim-pack/nvim-spectre",
-	{ "rcarriga/nvim-dap-ui",  requires = { "mfussenegger/nvim-dap" } },
+	{ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } },
 	{
 		"nvim-neorg/neorg",
 		build = ":Neorg sync-parsers",
@@ -218,14 +218,14 @@ end, { TablineFileNameBlock })
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
 local function get_non_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -404,11 +404,48 @@ local function open_nvim_tree(data)
 end
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
+local timers = {}
+
 vim.api.nvim_create_autocmd("TermOpen", {
-	group = vim.api.nvim_create_augroup("HideTerminal", { clear = true }),
+	group = vim.api.nvim_create_augroup("TermOpenCallback", { clear = true }),
 	pattern = "term://*",
 	callback = function()
 		vim.cmd("PinBuftype")
+
+		local timer = vim.loop.new_timer()
+		local bufnr = vim.api.nvim_get_current_buf()
+		timers[bufnr] = timer
+		timer:start(1000, 750, function()
+			vim.schedule(function()
+				local tji = vim.api.nvim_buf_get_var(bufnr, "terminal_job_id")
+				local pid = vim.fn.jobpid(tji)
+				local result = vim.fn.system("pgrep -lP " .. pid)
+				local first_child = result:gmatch("([^\n]*)\n?")()
+
+				local words_iterator = first_child:gmatch("%S+")
+				words_iterator()
+
+				local words = {}
+				for word in words_iterator do
+					table.insert(words, word)
+				end
+
+				local process_name = table.concat(words, " ")
+				if process_name ~= "" then
+					vim.api.nvim_buf_set_name(bufnr, process_name)
+				else
+					vim.api.nvim_buf_set_name(bufnr, "Terminal " .. bufnr)
+				end
+			end)
+		end)
+	end,
+})
+vim.api.nvim_create_autocmd("TermClose", {
+	group = vim.api.nvim_create_augroup("TermCloseCallback", { clear = true }),
+	pattern = "term://*",
+	callback = function()
+		local bufnr = vim.api.nvim_get_current_buf()
+		timers[bufnr]:close()
 	end,
 })
 
@@ -515,8 +552,8 @@ wk.register({
 					local current_buf_nr = vim.fn.bufnr()
 					local all = vim.tbl_filter(function(bufnr)
 						return current_buf_nr ~= bufnr
-						    and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-						    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+							and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+							and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 					end, vim.api.nvim_list_bufs())
 					for _, bufnr in ipairs(all) do
 						require("bufdelete").bufdelete(bufnr, false)
@@ -684,3 +721,8 @@ dap.configurations.rust = {
 		runInTerminal = true,
 	},
 }
+
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	pattern = { "*" },
+	command = [[%s/\s\+$//e]],
+})
