@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -95,6 +95,7 @@ require("lazy").setup({
 	"edluffy/hologram.nvim",
 	"xiyaowong/transparent.nvim",
 	"ellisonleao/gruvbox.nvim",
+	"rebelot/kanagawa.nvim",
 	{
 		"williamboman/mason.nvim",
 		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
@@ -121,9 +122,9 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
-	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
+	{ "ellisonleao/glow.nvim", config = true,                         cmd = "Glow" },
 	"nvim-pack/nvim-spectre",
-	{ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } },
+	{ "rcarriga/nvim-dap-ui",  requires = { "mfussenegger/nvim-dap" } },
 	{
 		"nvim-neorg/neorg",
 		build = ":Neorg sync-parsers",
@@ -197,7 +198,7 @@ local TablineFileFlags = {
 	{
 		condition = function(self)
 			return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
-				or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+			    or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
 		end,
 		provider = function(self)
 			if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
@@ -215,7 +216,7 @@ local FileIcon = {
 		local filename = self.filename
 		local extension = vim.fn.fnamemodify(filename, ":e")
 		self.icon, self.icon_color =
-			require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+		    require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
 	end,
 	provider = function(self)
 		return self.icon and (self.icon .. " ")
@@ -245,7 +246,7 @@ local TablineFileNameBlock = {
 		end,
 		name = "termline_buffer_callback",
 	},
-	FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
+	FileIcon,  -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
 	TablineFileName,
 	TablineFileFlags, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
 }
@@ -290,14 +291,14 @@ end, { TerminalLineFileNameBlock })
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-			and vim.api.nvim_buf_get_var(bufnr, "show_in_terminal_bar")
+		    and vim.api.nvim_buf_get_var(bufnr, "show_in_terminal_bar")
 	end, vim.api.nvim_list_bufs())
 end
 
 local function get_non_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -347,7 +348,7 @@ vim.g.maplocalleader = " "
 vim.wo.signcolumn = "yes" -- prevents jitter
 vim.opt.updatetime = 100
 vim.o.background = "dark" -- or "light" for light mode
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme kanagawa")
 -- Set completeopt to have a better completion experience
 -- :help completeopt
 -- menuone: popup even when there's only one match
@@ -628,8 +629,8 @@ wk.register({
 					local current_buf_nr = vim.fn.bufnr()
 					local all = vim.tbl_filter(function(bufnr)
 						return current_buf_nr ~= bufnr
-							and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-							and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+						    and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+						    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 					end, vim.api.nvim_list_bufs())
 					for _, bufnr in ipairs(all) do
 						require("bufdelete").bufdelete(bufnr, false)
