@@ -218,7 +218,7 @@ end, { TablineFileNameBlock })
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_var(bufnr, "show_in_terminal_bar")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -411,9 +411,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
 	pattern = "term://*",
 	callback = function()
 		vim.cmd("PinBuftype")
+		vim.cmd("set nobl")
 
 		local timer = vim.loop.new_timer()
 		local bufnr = vim.api.nvim_get_current_buf()
+
+		vim.api.nvim_buf_set_var(bufnr, "show_in_terminal_bar", true)
+
 		timers[bufnr] = timer
 		timer:start(1000, 750, function()
 			vim.schedule(function()
@@ -577,6 +581,7 @@ end, {})
 
 -- LSP Config
 require("lspconfig").pylsp.setup({})
+require("lspconfig").gopls.setup({})
 require("lspconfig").tsserver.setup({})
 require("lspconfig").zls.setup({})
 require("lspconfig").gdscript.setup({
