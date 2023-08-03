@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -122,9 +122,9 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
-	{ "ellisonleao/glow.nvim", config = true,                         cmd = "Glow" },
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 	"nvim-pack/nvim-spectre",
-	{ "rcarriga/nvim-dap-ui",  requires = { "mfussenegger/nvim-dap" } },
+	{ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } },
 	{
 		"nvim-neorg/neorg",
 		build = ":Neorg sync-parsers",
@@ -198,7 +198,7 @@ local TablineFileFlags = {
 	{
 		condition = function(self)
 			return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
-			    or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+				or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
 		end,
 		provider = function(self)
 			if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
@@ -216,7 +216,7 @@ local FileIcon = {
 		local filename = self.filename
 		local extension = vim.fn.fnamemodify(filename, ":e")
 		self.icon, self.icon_color =
-		    require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+			require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
 	end,
 	provider = function(self)
 		return self.icon and (self.icon .. " ")
@@ -246,7 +246,7 @@ local TablineFileNameBlock = {
 		end,
 		name = "termline_buffer_callback",
 	},
-	FileIcon,  -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
+	FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
 	TablineFileName,
 	TablineFileFlags, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
 }
@@ -291,14 +291,14 @@ end, { TerminalLineFileNameBlock })
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-		    and vim.api.nvim_buf_get_var(bufnr, "show_in_terminal_bar")
+			and vim.api.nvim_buf_get_var(bufnr, "show_in_terminal_bar")
 	end, vim.api.nvim_list_bufs())
 end
 
 local function get_non_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -494,24 +494,26 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		timers[bufnr] = timer
 		timer:start(1000, 750, function()
 			vim.schedule(function()
-				local tji = vim.api.nvim_buf_get_var(bufnr, "terminal_job_id")
-				local pid = vim.fn.jobpid(tji)
-				local result = vim.fn.system("pgrep -lP " .. pid)
-				local first_child = result:gmatch("([^\n]*)\n?")()
+				if vim.api.nvim_buf_is_valid(bufnr) then
+					local tji = vim.api.nvim_buf_get_var(bufnr, "terminal_job_id")
+					local pid = vim.fn.jobpid(tji)
+					local result = vim.fn.system("pgrep -lP " .. pid)
+					local first_child = result:gmatch("([^\n]*)\n?")()
 
-				local words_iterator = first_child:gmatch("%S+")
-				words_iterator()
+					local words_iterator = first_child:gmatch("%S+")
+					words_iterator()
 
-				local words = {}
-				for word in words_iterator do
-					table.insert(words, word)
-				end
+					local words = {}
+					for word in words_iterator do
+						table.insert(words, word)
+					end
 
-				local process_name = table.concat(words, " ")
-				if process_name ~= "" then
-					vim.api.nvim_buf_set_name(bufnr, bufnr .. " " .. process_name)
-				else
-					vim.api.nvim_buf_set_name(bufnr, tostring(bufnr))
+					local process_name = table.concat(words, " ")
+					if process_name ~= "" then
+						vim.api.nvim_buf_set_name(bufnr, bufnr .. " " .. process_name)
+					else
+						vim.api.nvim_buf_set_name(bufnr, tostring(bufnr))
+					end
 				end
 			end)
 		end)
@@ -629,8 +631,8 @@ wk.register({
 					local current_buf_nr = vim.fn.bufnr()
 					local all = vim.tbl_filter(function(bufnr)
 						return current_buf_nr ~= bufnr
-						    and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-						    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+							and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+							and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 					end, vim.api.nvim_list_bufs())
 					for _, bufnr in ipairs(all) do
 						require("bufdelete").bufdelete(bufnr, false)
@@ -642,7 +644,27 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
-vim.keymap.set("n", "<Tab>", "<cmd>bnext<CR>", {})
+vim.keymap.set("n", "<Tab>", function()
+	if vim.bo.buftype == "terminal" then
+		local current_buf_nr = vim.fn.bufnr()
+		local current_idx = nil
+		local terminals = get_terminal_bufs()
+		for i, v in pairs(terminals) do
+			if v == current_buf_nr then
+				current_idx = i
+				break
+			end
+		end
+
+		if current_idx < #terminals then
+			vim.cmd("buffer " .. terminals[current_idx + 1])
+		else
+			vim.cmd("buffer " .. terminals[1])
+		end
+	else
+		vim.cmd("<cmd>bnext<CR>")
+	end
+end, {})
 vim.keymap.set("n", "<c-o>", "<cmd>BufferLinePick<CR>", {})
 vim.keymap.set("n", "<c-p>", telescope_builtin.find_files, {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", {})
