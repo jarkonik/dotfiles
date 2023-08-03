@@ -296,7 +296,7 @@ end
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-			and safe_get_buffer_var(bufnr, "show_in_terminal_bar", true)
+			and safe_get_buffer_var(bufnr, "show_in_terminal_bar", false)
 	end, vim.api.nvim_list_bufs())
 end
 
