@@ -288,10 +288,15 @@ local TerminalLineBufferBlock = utils.surround({ "", "" }, function(self)
 	end
 end, { TerminalLineFileNameBlock })
 
+local function safe_get_buffer_var(bufnr, key, default_value)
+	local success, value = pcall(vim.api.nvim_buf_get_var, bufnr, key)
+	return success and value or default_value
+end
+
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-			and vim.api.nvim_buf_get_var(bufnr, "show_in_terminal_bar")
+			and safe_get_buffer_var(bufnr, "show_in_terminal_bar", true)
 	end, vim.api.nvim_list_bufs())
 end
 
