@@ -662,7 +662,7 @@ vim.keymap.set("n", "<Tab>", function()
 			vim.cmd("buffer " .. terminals[1])
 		end
 	else
-		vim.cmd("<cmd>bnext<CR>")
+		vim.cmd("bnext")
 	end
 end, {})
 vim.keymap.set("n", "<c-o>", "<cmd>BufferLinePick<CR>", {})
