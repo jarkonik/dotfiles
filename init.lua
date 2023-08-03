@@ -763,6 +763,22 @@ vim.api.nvim_create_autocmd("TermClose", {
 				vim.api.nvim_win_set_buf(i.winid, newbuf)
 			end
 		end
+
+		local current_idx = nil
+		local terminals = get_terminal_bufs()
+		for i, v in pairs(terminals) do
+			if v == buf then
+				current_idx = i
+				break
+			end
+		end
+
+		if current_idx < #terminals then
+			vim.cmd("buffer " .. terminals[current_idx + 1])
+		else
+			vim.cmd("buffer " .. terminals[1])
+		end
+
 		vim.api.nvim_buf_delete(buf, {})
 	end,
 })
