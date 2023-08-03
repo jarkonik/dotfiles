@@ -23,6 +23,11 @@ font pango:FiraCode Nerd Font 16
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id dunst
+exec --no-startup-id flatpak run com.spotify.Client
+exec --no-startup-id thunderbird
+exec --no-startup-id flatpak run com.sindresorhus.Caprine
+exec --no-startup-id flatpak run com.discordapp.Discord
+exec --no-startup-id pavucontrol
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 
@@ -59,7 +64,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+backslash exec codium
 
 # kill focused window
-bindsym $mod+Shift+q [con_id="__focused__" title="^(?!Messenger).*$" class="^(?!thunderbird|Caprine|discord|Spotify).*$"] kill
+bindsym $mod+Shift+q [con_id="__focused__" title="^(?!Messenger).*$" class="^(?!thunderbird|Caprine|discord|Spotify|Pavucontrol).*$"] kill
 
 # start dmenu (a program launcher)
 # A more modern dmenu replacement is rofi:
@@ -248,6 +253,8 @@ for_window [class="dolphin"] floating enable
 for_window [class="Caprine"] floating enable move scratchpad
 for_window [title="Messenger"] floating enable move scratchpad
 for_window [class="discord"] floating enable move scratchpad
+for_window [class="Spotify"] floating enable move scratchpad
+for_window [class="Pavucontrol"] floating enable move scratchpad
 for_window [class="thunderbird"] floating enable move scratchpad
 for_window [class="Slack"] floating enable move scratchpad
 for_window [class="spectacle"] floating enable
