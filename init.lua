@@ -36,7 +36,7 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
-			auto_open = false,
+			auto_open = true,
 		},
 	},
 	{ "j-hui/fidget.nvim", tag = "legacy" },
@@ -569,7 +569,12 @@ wk.register({
 	},
 	g = {
 		name = "Git",
-		o = { neogit.open, "Open Git" },
+		o = {
+			function()
+				neogit.open({ kind = "split" })
+			end,
+			"Open Git",
+		},
 	},
 	r = {
 		name = "Run",
