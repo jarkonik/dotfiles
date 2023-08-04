@@ -237,15 +237,6 @@ local TablineFileNameBlock = {
 			return "TabLine"
 		end
 	end,
-	on_click = {
-		callback = function(_, minwid, _, _)
-			vim.api.nvim_win_set_buf(0, minwid)
-		end,
-		minwid = function(self)
-			return self.bufnr
-		end,
-		name = "termline_buffer_callback",
-	},
 	FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
 	TablineFileName,
 	TablineFileFlags, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
