@@ -690,7 +690,7 @@ require("lspconfig").lua_ls.setup({
 })
 require("lspconfig").solargraph.setup({
 	cmd = { "bundle", "exec", "solargraph", "stdio" },
-	{
+	init_options = {
 		formatting = false,
 	},
 	on_attach = on_attach,
