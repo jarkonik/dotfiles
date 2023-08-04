@@ -631,6 +631,10 @@ wk.register({
 	},
 }, { prefix = "<leader>" })
 
+require("spectre").setup({
+	live_update = true,
+})
+
 vim.keymap.set("n", "<Tab>", function()
 	if vim.bo.buftype == "terminal" then
 		local current_buf_nr = vim.fn.bufnr()
