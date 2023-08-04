@@ -559,7 +559,7 @@ wk.register({
 		b = { telescope_builtin.buffers, "Find buffers" },
 		h = { telescope_builtin.help_tags, "Find help tags" },
 		d = { telescope_builtin.diagnostics, "List diagnostics" },
-		r = { require("spectre").toggle, "Replace" },
+		s = { require("spectre").toggle, "Search" },
 	},
 	t = {
 		name = "Tree",

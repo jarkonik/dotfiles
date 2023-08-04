@@ -9,9 +9,9 @@
     }
   },
   "editor.fontLigatures": true,
-  "vim.handleKeys": {
-    "<C-w>": false
-  },
+  // "vim.handleKeys": {
+  //   "<C-w>": false
+  // },
   "editor.fontFamily": "FiraCode Nerd Font",
   "git.autofetch": true,
   "editor.formatOnSave": true,
@@ -32,21 +32,20 @@
   },
   "editor.inlayHints.fontSize": 8,
   "editor.inlayHints.padding": true,
-  "workbench.colorTheme": "Gruvbox Dark Hard",
+  "workbench.colorTheme": "Nightingale",
   "gitdoc.autoCommitDelay": 3000,
   "workbench.iconTheme": "minimalistic-icons",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.renderWhitespace": "all",
-  "window.menuBarVisibility": "toggle",
+  "window.menuBarVisibility": "hidden",
   "workbench.startupEditor": "none",
   "zenMode.fullScreen": false,
-  "zenMode.centerLayout": false,
-  "editor.rulers": [
-    80
-  ],
+  "editor.rulers": [80],
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "vim.useSystemClipboard": true,
+  "python.languageServer": "None"
 }
