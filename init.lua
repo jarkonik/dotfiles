@@ -352,6 +352,7 @@ local function on_attach(client, buffer)
 			callback = function()
 				vim.lsp.buf.format({
 					async = false,
+					timeout_ms = 5000,
 					filter = function(cl)
 						return cl.name ~= "tsserver"
 					end,
@@ -689,6 +690,9 @@ require("lspconfig").lua_ls.setup({
 })
 require("lspconfig").solargraph.setup({
 	cmd = { "bundle", "exec", "solargraph", "stdio" },
+	{
+		formatting = false,
+	},
 	on_attach = on_attach,
 })
 local null_ls = require("null-ls")
