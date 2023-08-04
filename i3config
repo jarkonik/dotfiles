@@ -28,6 +28,7 @@ exec --no-startup-id thunderbird
 exec --no-startup-id flatpak run com.sindresorhus.Caprine
 exec --no-startup-id flatpak run com.discordapp.Discord
 exec --no-startup-id pavucontrol
+exec --no-startup-id flatpak run dev.lizardbyte.app.Sunshine
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 

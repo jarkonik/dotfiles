@@ -269,15 +269,6 @@ local TerminalLineFileNameBlock = {
 			return "TabLine"
 		end
 	end,
-	on_click = {
-		callback = function(_, minwid, _, _)
-			vim.api.nvim_win_set_buf(0, minwid)
-		end,
-		minwid = function(self)
-			return self.bufnr
-		end,
-		name = "termline_buffer_callback",
-	},
 	TablineFileName,
 }
 local TerminalLineBufferBlock = utils.surround({ "", "" }, function(self)
