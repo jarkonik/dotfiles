@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{ "NeogitOrg/neogit", dependencies = "nvim-lua/plenary.nvim" },
+	{ "NeogitOrg/neogit",  dependencies = "nvim-lua/plenary.nvim" },
 	"lewis6991/fileline.nvim",
 	"mfussenegger/nvim-dap",
 	{
@@ -122,9 +122,9 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		},
 	},
-	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
+	{ "ellisonleao/glow.nvim", config = true,                         cmd = "Glow" },
 	"nvim-pack/nvim-spectre",
-	{ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } },
+	{ "rcarriga/nvim-dap-ui",  requires = { "mfussenegger/nvim-dap" } },
 	{
 		"nvim-neorg/neorg",
 		build = ":Neorg sync-parsers",
@@ -145,7 +145,11 @@ require("lazy").setup({
 			})
 		end,
 	},
+	"ggandor/leap.nvim",
+	"tpope/vim-repeat",
 })
+
+require("leap").add_default_mappings()
 
 require("dapui").setup()
 
@@ -198,7 +202,7 @@ local TablineFileFlags = {
 	{
 		condition = function(self)
 			return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
-				or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+			    or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
 		end,
 		provider = function(self)
 			if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
@@ -216,7 +220,7 @@ local FileIcon = {
 		local filename = self.filename
 		local extension = vim.fn.fnamemodify(filename, ":e")
 		self.icon, self.icon_color =
-			require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+		    require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
 	end,
 	provider = function(self)
 		return self.icon and (self.icon .. " ")
@@ -237,7 +241,7 @@ local TablineFileNameBlock = {
 			return "TabLine"
 		end
 	end,
-	FileIcon, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
+	FileIcon,  -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
 	TablineFileName,
 	TablineFileFlags, -- turns out the version defined in #crash-course-part-ii-filename-and-friends can be reutilized as is here!
 }
@@ -278,14 +282,14 @@ end
 local function get_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal"
-			and safe_get_buffer_var(bufnr, "show_in_terminal_bar", false)
+		    and safe_get_buffer_var(bufnr, "show_in_terminal_bar", false)
 	end, vim.api.nvim_list_bufs())
 end
 
 local function get_non_terminal_bufs()
 	return vim.tbl_filter(function(bufnr)
 		return vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-			and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+		    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 	end, vim.api.nvim_list_bufs())
 end
 
@@ -624,8 +628,8 @@ wk.register({
 					local current_buf_nr = vim.fn.bufnr()
 					local all = vim.tbl_filter(function(bufnr)
 						return current_buf_nr ~= bufnr
-							and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
-							and vim.api.nvim_buf_get_option(bufnr, "buflisted")
+						    and vim.api.nvim_buf_get_option(bufnr, "buftype") ~= "terminal"
+						    and vim.api.nvim_buf_get_option(bufnr, "buflisted")
 					end, vim.api.nvim_list_bufs())
 					for _, bufnr in ipairs(all) do
 						require("bufdelete").bufdelete(bufnr, false)
@@ -672,6 +676,7 @@ vim.keymap.set("n", "<c-c>", function()
 end, {})
 
 -- LSP Config
+require("lspconfig").zls.setup({})
 require("lspconfig").pylsp.setup({})
 require("lspconfig").gopls.setup({})
 require("lspconfig").tsserver.setup({})
