@@ -32,9 +32,9 @@
   },
   "editor.inlayHints.fontSize": 8,
   "editor.inlayHints.padding": true,
-  "workbench.colorTheme": "Nightingale",
+  "workbench.colorTheme": "GitHub Dark",
   "gitdoc.autoCommitDelay": 3000,
-  "workbench.iconTheme": "minimalistic-icons",
+  "workbench.iconTheme": "catppuccin-frappe",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -47,5 +47,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "vim.useSystemClipboard": true,
-  "python.languageServer": "None"
+  "python.languageServer": "None",
+  "go.toolsManagement.autoUpdate": true,
+  "debug.onTaskErrors": "abort"
 }
