@@ -1,5 +1,6 @@
 {
   "keyboard.dispatch": "keyCode",
+  "rust-analyzer.lens.implementations.enable": false,
   "godot_tools.gdscript_lsp_server_port": 6005,
   "terminal.integrated.profiles.linux": {
     "bash": {
@@ -9,9 +10,6 @@
     }
   },
   "editor.fontLigatures": true,
-  // "vim.handleKeys": {
-  //   "<C-w>": false
-  // },
   "editor.fontFamily": "FiraCode Nerd Font",
   "git.autofetch": true,
   "editor.formatOnSave": true,
@@ -30,24 +28,24 @@
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
-  "editor.inlayHints.fontSize": 8,
-  "editor.inlayHints.padding": true,
-  "workbench.colorTheme": "GitHub Dark",
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "workbench.colorTheme": "Night Coder Ash Contrast",
   "gitdoc.autoCommitDelay": 3000,
   "workbench.iconTheme": "catppuccin-frappe",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.renderWhitespace": "all",
   "window.menuBarVisibility": "hidden",
   "workbench.startupEditor": "none",
-  "zenMode.fullScreen": false,
   "editor.rulers": [80],
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "vim.useSystemClipboard": true,
   "python.languageServer": "None",
-  "go.toolsManagement.autoUpdate": true,
-  "debug.onTaskErrors": "abort"
+  "debug.onTaskErrors": "abort",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "remote.autoForwardPortsSource": "hybrid"
 }
