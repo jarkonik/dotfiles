@@ -31,9 +31,26 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.wo.number = true
 vim.opt.shortmess:append("sI")
+vim.opt.wrap = false
 
 require("lazy").setup({
+	{
+		"3rd/image.nvim",
+		config = function()
+			-- ...
+		end
+	},
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	{
+		"benlubas/molten-nvim",
+		version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+		build = ":UpdateRemotePlugins",
+		init = function()
+			-- this is an example, not a default. Please see the readme for more configuration options
+			vim.g.molten_output_win_max_height = 12
+		end,
+	},
+	"rcarriga/nvim-notify",
 	{
 		'windwp/nvim-autopairs',
 		event = "InsertEnter",
@@ -87,6 +104,8 @@ require("lazy").setup({
 		lazy = false, -- This plugin is already lazy
 	}
 })
+
+require("image").setup({})
 
 vim.cmd.colorscheme "catppuccin-mocha"
 
@@ -218,3 +237,15 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 require("nvim-tree").setup()
 vim.keymap.set('n', '<leader>tt', require("nvim-tree.api").tree.toggle)
+
+vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
+	{ silent = true, desc = "Initialize the plugin" })
+vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>",
+	{ silent = true, desc = "run operator selection" })
+vim.keymap.set("n", "<leader>rl", ":MoltenEvaluateLine<CR>",
+	{ silent = true, desc = "evaluate line" })
+vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
+	{ silent = true, desc = "re-evaluate cell" })
+vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
+	{ silent = true, desc = "evaluate visual selection" })
+vim.g.molten_image_provider = "image.nvim"
