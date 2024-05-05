@@ -23,6 +23,7 @@ unset SSH_ASKPASS
 export PYTHONSTARTUP=.python_startup.py
 eval "$(~/.rbenv/bin/rbenv init - bash)"
 alias nvim=nvim_listen.sh
+alias nvim=nvr
 alias vim=nvim
 export EDITOR=nvim
 export TERM='xterm-256color'

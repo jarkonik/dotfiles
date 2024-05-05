@@ -1,15 +1,3 @@
-vim.g.mapleader = " "
-vim.opt.termguicolors = true
-vim.opt.cursorline = true
-vim.o.background = "dark"
-vim.opt.updatetime = 1000
-vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "80"
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.wo.number = true
-vim.opt.shortmess:append("sI")
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -21,7 +9,28 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
+
 vim.opt.rtp:prepend(lazypath)
+
+if vim.g.vscode then
+	require("lazy").setup({
+		"terrortylor/nvim-comment",
+	})
+	require("nvim_comment").setup()
+	return
+end
+
+vim.g.mapleader = " "
+vim.opt.termguicolors = true
+vim.opt.cursorline = true
+vim.o.background = "dark"
+vim.opt.updatetime = 1000
+vim.opt.signcolumn = "yes"
+vim.opt.colorcolumn = "80"
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.wo.number = true
+vim.opt.shortmess:append("sI")
 
 require("lazy").setup({
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -70,18 +79,13 @@ require("lazy").setup({
 		'nvim-lualine/lualine.nvim',
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-})
-
-require("neodev").setup({
-	override = function(_, library)
-		library.enabled = true
-		library.plugins = true
-	end,
+	{ "catppuccin/nvim",      name = "catppuccin",                                                priority = 1000 },
+	{ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } }
 })
 
 vim.cmd.colorscheme "catppuccin-mocha"
 
+require("dapui").setup()
 require('lualine').setup({})
 
 require 'nvim-treesitter.configs'.setup({
@@ -123,8 +127,15 @@ cmp.setup({
 
 require("nvim_comment").setup()
 
-require("lspconfig").pyright.setup({})
+require("neodev").setup({
+	override = function(_, library)
+		library.enabled = true
+		library.plugins = true
+	end,
+})
 require('lspconfig').lua_ls.setup({})
+
+require("lspconfig").pyright.setup({})
 require("lspconfig").rust_analyzer.setup({})
 vim.api.nvim_create_autocmd('BufWritePre', {
 	callback = function()
