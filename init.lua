@@ -80,12 +80,25 @@ require("lazy").setup({
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
 	{ "catppuccin/nvim",      name = "catppuccin",                                                priority = 1000 },
-	{ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } }
+	{ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
+	{
+		'mrcjkb/rustaceanvim',
+		version = '^4', -- Recommended
+		lazy = false, -- This plugin is already lazy
+	}
 })
 
 vim.cmd.colorscheme "catppuccin-mocha"
 
+local dap = require('dap')
+dap.adapters.lldb = {
+	type = 'executable',
+	command = '/usr/bin/lldb-dap',
+	name = 'lldb'
+}
+
 require("dapui").setup()
+
 require('lualine').setup({})
 
 require 'nvim-treesitter.configs'.setup({
@@ -136,7 +149,6 @@ require("neodev").setup({
 require('lspconfig').lua_ls.setup({})
 
 require("lspconfig").pyright.setup({})
-require("lspconfig").rust_analyzer.setup({})
 vim.api.nvim_create_autocmd('BufWritePre', {
 	callback = function()
 		vim.lsp.buf.format()
@@ -175,6 +187,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		on_attach(bufnr)
 	end,
 })
+
+vim.keymap.set('n', '<leader>dd', require("dapui").toggle, {})
+vim.keymap.set('n', '<leader>db', require("dap").toggle_breakpoint, {})
+vim.keymap.set('n', '<leader>dr', function()
+	vim.cmd.RustLsp('debug')
+end, {})
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
