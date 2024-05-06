@@ -102,7 +102,15 @@ require("lazy").setup({
 		'mrcjkb/rustaceanvim',
 		version = '^4', -- Recommended
 		lazy = false, -- This plugin is already lazy
-	}
+	},
+	"jose-elias-alvarez/null-ls.nvim"
+})
+
+local null_ls = require("null-ls")
+null_ls.setup({
+	sources = {
+		null_ls.builtins.formatting.yapf
+	},
 })
 
 require("image").setup({})
@@ -249,3 +257,17 @@ vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
 vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
 	{ silent = true, desc = "evaluate visual selection" })
 vim.g.molten_image_provider = "image.nvim"
+
+vim.keymap.set('n', '<leader>bdo', function()
+	if vim.api.nvim_buf_get_option(0, "filetype") == "NvimTree" then
+		return
+	end
+
+	local bufs = vim.api.nvim_list_bufs()
+	local current_buf = vim.api.nvim_get_current_buf()
+	for _, i in ipairs(bufs) do
+		if i ~= current_buf and vim.api.nvim_buf_get_option(i, "filetype") ~= "NvimTree" then
+			vim.api.nvim_buf_delete(i, {})
+		end
+	end
+end, {})
