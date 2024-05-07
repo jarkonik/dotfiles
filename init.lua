@@ -74,6 +74,9 @@ require("lazy").setup({
 		},
 		init = function() vim.g.barbar_auto_setup = false end,
 		opts = {
+			icons = {
+				pinned = { button = '', filename = true },
+			}
 		},
 		version = '^1.0.0',
 	},
@@ -103,14 +106,19 @@ require("lazy").setup({
 		version = '^4', -- Recommended
 		lazy = false, -- This plugin is already lazy
 	},
-	"jose-elias-alvarez/null-ls.nvim"
-})
-
-local null_ls = require("null-ls")
-null_ls.setup({
-	sources = {
-		null_ls.builtins.formatting.yapf
-	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		}
+	}
 })
 
 require("image").setup({})
@@ -181,6 +189,16 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 		vim.lsp.buf.format()
 	end,
 })
+require('lspconfig').ruff_lsp.setup {
+	init_options = {
+		settings = {
+			-- Any extra CLI arguments for `ruff` go here.
+			args = {},
+		}
+	}
+}
+
+
 local on_attach = function(bufnr)
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
@@ -258,16 +276,15 @@ vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
 	{ silent = true, desc = "evaluate visual selection" })
 vim.g.molten_image_provider = "image.nvim"
 
-vim.keymap.set('n', '<leader>bdo', function()
-	if vim.api.nvim_buf_get_option(0, "filetype") == "NvimTree" then
-		return
-	end
+local opts = { noremap = true, silent = true }
 
-	local bufs = vim.api.nvim_list_bufs()
-	local current_buf = vim.api.nvim_get_current_buf()
-	for _, i in ipairs(bufs) do
-		if i ~= current_buf and vim.api.nvim_buf_get_option(i, "filetype") ~= "NvimTree" then
-			vim.api.nvim_buf_delete(i, {})
-		end
-	end
-end, {})
+local map = vim.api.nvim_set_keymap
+
+map('n', '<leader>bdo', "<Cmd>BufferCloseAllButCurrentOrPinned<CR>", opts);
+map('n', '<leader>bp', '<Cmd>BufferPin<CR>', opts)
+map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+map('n', '<A-n>', '<Cmd>BufferMovePrevious<CR>', opts)
+map('n', '<A-m>', '<Cmd>BufferMoveNext<CR>', opts)
+map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
+map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
