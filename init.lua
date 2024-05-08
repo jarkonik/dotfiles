@@ -50,6 +50,16 @@ require("lazy").setup({
 			vim.g.molten_output_win_max_height = 12
 		end,
 	},
+	{
+		"williamboman/mason.nvim"
+	},
+	{
+		"vhyrro/luarocks.nvim",
+		priority = 1000,
+		opts = {
+			rocks = { "magick" },
+		},
+	},
 	"rcarriga/nvim-notify",
 	{
 		'windwp/nvim-autopairs',
@@ -291,3 +301,5 @@ map('n', '<A-n>', '<Cmd>BufferMovePrevious<CR>', opts)
 map('n', '<A-m>', '<Cmd>BufferMoveNext<CR>', opts)
 map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
+
+require("mason").setup()
