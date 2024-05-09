@@ -1,0 +1,17 @@
+#!/bin/bash
+
+path=$(cut -d " " -f 2 <<< $@)
+dir=$(dirname $path)
+cd $dir
+args=$@
+
+repo_path=$(git rev-parse --show-toplevel 2>/dev/null)
+cd $repo_path
+if [ -n "$repo_path" ]; then
+	servername=/tmp/nvr$(echo $repo_path | tr "/" "_")
+	echo $servername
+	nvr -s --servername $servername "$@"
+else	
+	nvim "$@"
+fi
+
