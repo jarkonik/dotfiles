@@ -210,6 +210,7 @@ require('lspconfig').ruff_lsp.setup {
 		}
 	}
 }
+require 'lspconfig'.gdscript.setup {}
 
 
 local on_attach = function(bufnr)
