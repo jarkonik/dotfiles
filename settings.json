@@ -9,5 +9,6 @@
     "workbench.productIconTheme": "material-product-icons",
     "workbench.iconTheme": "catppuccin-mocha",
     "editor.inlayHints.enabled": "offUnlessPressed",
-    "rust-analyzer.lens.implementations.enable": false
+    "rust-analyzer.lens.implementations.enable": false,
+    "remote.autoForwardPortsSource": "hybrid"
 }
