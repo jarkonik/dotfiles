@@ -128,7 +128,8 @@ require("lazy").setup({
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
 		}
-	}
+	},
+	"dstein64/nvim-scrollview"
 })
 
 require("image").setup({})
