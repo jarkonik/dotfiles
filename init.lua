@@ -117,6 +117,12 @@ require("lazy").setup({
 		lazy = false, -- This plugin is already lazy
 	},
 	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {
+		},
+	},
+	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		init = function()
@@ -129,7 +135,7 @@ require("lazy").setup({
 			-- refer to the configuration section below
 		}
 	},
-	"dstein64/nvim-scrollview"
+	"dstein64/nvim-scrollview",
 })
 
 require("image").setup({})
