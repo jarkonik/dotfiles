@@ -34,12 +34,6 @@ vim.opt.shortmess:append("sI")
 vim.opt.wrap = false
 
 require("lazy").setup({
-	{
-		"3rd/image.nvim",
-		config = function()
-			-- ...
-		end
-	},
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{
 		"benlubas/molten-nvim",
@@ -137,8 +131,6 @@ require("lazy").setup({
 	},
 	"dstein64/nvim-scrollview",
 })
-
-require("image").setup({})
 
 vim.cmd.colorscheme "catppuccin-mocha"
 
