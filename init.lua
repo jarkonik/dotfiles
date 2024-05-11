@@ -136,6 +136,7 @@ require("lazy").setup({
 		}
 	},
 	"dstein64/nvim-scrollview",
+	"sindrets/diffview.nvim"
 })
 
 require("image").setup({})
@@ -311,3 +312,10 @@ map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
 
 require("mason").setup()
+
+vim.api.nvim_create_autocmd('BufEnter', {
+	pattern = { "*.gd" },
+	callback = function()
+		vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
+	end,
+})
