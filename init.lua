@@ -88,6 +88,7 @@ require("lazy").setup({
 		},
 		init = function() vim.g.barbar_auto_setup = false end,
 		opts = {
+			no_name_title = "unnamed",
 			icons = {
 				pinned = { button = '', filename = true },
 			}
@@ -306,6 +307,10 @@ map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
 vim.keymap.set('n', '<leader>fg', '<cmd>lua require("spectre").toggle()<CR>', {
 	desc = "Toggle Spectre"
 })
+
+vim.keymap.set('n', '<leader>bf', function()
+	print(vim.api.nvim_buf_get_name(0))
+end)
 
 vim.api.nvim_create_autocmd('BufEnter', {
 	pattern = { "*.gd" },
