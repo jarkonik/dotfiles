@@ -11,19 +11,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-
-if vim.g.vscode then
-	require("lazy").setup({
-		{
-			"terrortylor/nvim-comment",
-			config = function()
-				require("nvim_comment").setup()
-			end
-		},
-	})
-	return
-end
-
 vim.g.mapleader = " "
 vim.opt.termguicolors = true
 vim.opt.cursorline = true
@@ -36,6 +23,18 @@ vim.g.loaded_netrwPlugin = 1
 vim.wo.number = true
 vim.opt.shortmess:append("sI")
 vim.opt.wrap = false
+
+if vim.g.vscode then
+	require("lazy").setup({
+		{
+			"terrortylor/nvim-comment",
+			config = function()
+				require("nvim_comment").setup()
+			end
+		},
+	})
+	return
+end
 
 require("lazy").setup({
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
