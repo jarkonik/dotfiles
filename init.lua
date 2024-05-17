@@ -14,9 +14,13 @@ vim.opt.rtp:prepend(lazypath)
 
 if vim.g.vscode then
 	require("lazy").setup({
-		"terrortylor/nvim-comment",
+		{
+			"terrortylor/nvim-comment",
+			config = function()
+				require("nvim_comment").setup()
+			end
+		},
 	})
-	require("nvim_comment").setup()
 	return
 end
 
@@ -69,7 +73,13 @@ require("lazy").setup({
 	'hrsh7th/cmp-vsnip',
 	'hrsh7th/vim-vsnip',
 	"neovim/nvim-lspconfig",
-	"terrortylor/nvim-comment",
+
+	{
+		"terrortylor/nvim-comment",
+		config = function()
+			require("nvim_comment").setup()
+		end
+	},
 	"nvim-tree/nvim-tree.lua",
 	{
 		'romgrk/barbar.nvim',
@@ -125,11 +135,7 @@ require("lazy").setup({
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
 		end,
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		}
+		opts = {}
 	},
 	"dstein64/nvim-scrollview",
 	"sindrets/diffview.nvim",
@@ -184,8 +190,6 @@ cmp.setup({
 		{ name = 'buffer' },
 	})
 })
-
-require("nvim_comment").setup()
 
 require("neodev").setup({
 	override = function(_, library)
