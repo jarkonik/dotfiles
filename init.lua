@@ -252,7 +252,6 @@ dap.adapters.lldb = {
 	command = '/usr/bin/lldb-dap',
 	name = 'lldb'
 }
-
 require("dapui").setup()
 vim.keymap.set('n', '<leader>dd', require("dapui").toggle, {})
 vim.keymap.set('n', '<leader>db', require("dap").toggle_breakpoint, {})
@@ -293,9 +292,7 @@ vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
 	{ silent = true, desc = "evaluate visual selection" })
 
 local opts = { noremap = true, silent = true }
-
 local map = vim.api.nvim_set_keymap
-
 map('n', '<leader>bdo', "<Cmd>BufferCloseAllButCurrentOrPinned<CR>", opts);
 map('n', '<leader>bp', '<Cmd>BufferPin<CR>', opts)
 map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
