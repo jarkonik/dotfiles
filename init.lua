@@ -115,7 +115,9 @@ require("lazy").setup({
 		tag = '0.1.6',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
-	"lewis6991/gitsigns.nvim",
+	{
+		"lewis6991/gitsigns.nvim", opts = {}
+	},
 	{ "folke/neodev.nvim",               opts = {} },
 	{
 		'nvim-lualine/lualine.nvim',
@@ -171,8 +173,6 @@ require 'nvim-treesitter.configs'.setup({
 	ignore_install = {},
 	modules = {}
 })
-
-require('gitsigns').setup()
 
 local cmp = require('cmp')
 cmp.setup({
