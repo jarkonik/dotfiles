@@ -23,6 +23,8 @@ vim.g.loaded_netrwPlugin = 1
 vim.wo.number = true
 vim.opt.shortmess:append("sI")
 vim.opt.wrap = false
+vim.opt.title = true
+vim.opt.titlestring = [[%{fnamemodify(getcwd(), ':t')}]]
 
 if vim.g.vscode then
 	require("lazy").setup({
