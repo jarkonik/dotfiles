@@ -130,7 +130,9 @@ require("lazy").setup({
 		}
 	},
 	"dstein64/nvim-scrollview",
-	"sindrets/diffview.nvim"
+	"sindrets/diffview.nvim",
+	'nvim-lua/plenary.nvim',
+	'nvim-pack/nvim-spectre'
 })
 
 vim.cmd.colorscheme "catppuccin-mocha"
@@ -271,7 +273,6 @@ vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#98c379', bg = '#31353
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
@@ -302,6 +303,10 @@ map('n', '<A-n>', '<Cmd>BufferMovePrevious<CR>', opts)
 map('n', '<A-m>', '<Cmd>BufferMoveNext<CR>', opts)
 map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
+
+vim.keymap.set('n', '<leader>fg', '<cmd>lua require("spectre").toggle()<CR>', {
+	desc = "Toggle Spectre"
+})
 
 require("mason").setup()
 
