@@ -288,7 +288,6 @@ vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
 	{ silent = true, desc = "re-evaluate cell" })
 vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
 	{ silent = true, desc = "evaluate visual selection" })
-vim.g.molten_image_provider = "image.nvim"
 
 local opts = { noremap = true, silent = true }
 
