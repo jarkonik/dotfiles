@@ -80,7 +80,14 @@ require("lazy").setup({
 			require("nvim_comment").setup()
 		end
 	},
-	"nvim-tree/nvim-tree.lua",
+	{
+		"nvim-tree/nvim-tree.lua",
+		opts = {},
+		init = function()
+			vim.keymap.set('n', '<leader>tt', require("nvim-tree.api").tree.toggle)
+		end
+
+	},
 	{
 		'romgrk/barbar.nvim',
 		dependencies = {
@@ -279,9 +286,6 @@ local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-
-require("nvim-tree").setup()
-vim.keymap.set('n', '<leader>tt', require("nvim-tree.api").tree.toggle)
 
 vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
 	{ silent = true, desc = "Initialize the plugin" })
