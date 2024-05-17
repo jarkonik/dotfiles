@@ -108,18 +108,34 @@ require("lazy").setup({
 	{
 		"lewis6991/gitsigns.nvim", opts = {}
 	},
-	{ "folke/neodev.nvim",               opts = {} },
+	{
+		"folke/neodev.nvim",
+		opts = {
+			override = function(_, library)
+				library.enabled = true
+				library.plugins = true
+			end,
+
+		}
+	},
 	{
 		'nvim-lualine/lualine.nvim',
 		opts = {},
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
-	{ "catppuccin/nvim",      name = "catppuccin",                                                priority = 1000 },
-	{ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme "catppuccin-mocha"
+		end
+	},
+	{ "rcarriga/nvim-dap-ui",            dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
 	{
 		'mrcjkb/rustaceanvim',
-		version = '^4', -- Recommended
-		lazy = false, -- This plugin is already lazy
+		version = '^4',
+		lazy = false,
 	},
 	{
 		"folke/trouble.nvim",
@@ -141,17 +157,6 @@ require("lazy").setup({
 	'nvim-lua/plenary.nvim',
 	'nvim-pack/nvim-spectre'
 })
-
-vim.cmd.colorscheme "catppuccin-mocha"
-
-local dap = require('dap')
-dap.adapters.lldb = {
-	type = 'executable',
-	command = '/usr/bin/lldb-dap',
-	name = 'lldb'
-}
-
-require("dapui").setup()
 
 require 'nvim-treesitter.configs'.setup({
 	ensure_installed = {},
@@ -188,14 +193,7 @@ cmp.setup({
 	})
 })
 
-require("neodev").setup({
-	override = function(_, library)
-		library.enabled = true
-		library.plugins = true
-	end,
-})
 require('lspconfig').lua_ls.setup({})
-
 require("lspconfig").pyright.setup({})
 vim.api.nvim_create_autocmd('BufWritePre', {
 	callback = function()
@@ -214,8 +212,6 @@ require('lspconfig').ruff_lsp.setup {
 	}
 }
 require 'lspconfig'.gdscript.setup {}
-
-
 local on_attach = function(bufnr)
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
@@ -250,6 +246,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+local dap = require('dap')
+dap.adapters.lldb = {
+	type = 'executable',
+	command = '/usr/bin/lldb-dap',
+	name = 'lldb'
+}
+
+require("dapui").setup()
 vim.keymap.set('n', '<leader>dd', require("dapui").toggle, {})
 vim.keymap.set('n', '<leader>db', require("dap").toggle_breakpoint, {})
 vim.keymap.set('n', '<leader>dr', function()
