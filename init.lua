@@ -45,7 +45,8 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"williamboman/mason.nvim"
+		"williamboman/mason.nvim",
+		opts = {}
 	},
 	{
 		"vhyrro/luarocks.nvim",
@@ -101,6 +102,7 @@ require("lazy").setup({
 	{ "folke/neodev.nvim",               opts = {} },
 	{
 		'nvim-lualine/lualine.nvim',
+		opts = {},
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
 	{ "catppuccin/nvim",      name = "catppuccin",                                                priority = 1000 },
@@ -145,8 +147,6 @@ dap.adapters.lldb = {
 }
 
 require("dapui").setup()
-
-require('lualine').setup({})
 
 require 'nvim-treesitter.configs'.setup({
 	ensure_installed = {},
@@ -307,8 +307,6 @@ map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
 vim.keymap.set('n', '<leader>fg', '<cmd>lua require("spectre").toggle()<CR>', {
 	desc = "Toggle Spectre"
 })
-
-require("mason").setup()
 
 vim.api.nvim_create_autocmd('BufEnter', {
 	pattern = { "*.gd" },
