@@ -41,23 +41,15 @@ require("lazy").setup({
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{
 		"benlubas/molten-nvim",
-		version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+		version = "^1.0.0",
 		build = ":UpdateRemotePlugins",
 		init = function()
-			-- this is an example, not a default. Please see the readme for more configuration options
 			vim.g.molten_output_win_max_height = 12
 		end,
 	},
 	{
 		"williamboman/mason.nvim",
 		opts = {}
-	},
-	{
-		"vhyrro/luarocks.nvim",
-		priority = 1000,
-		opts = {
-			rocks = { "magick" },
-		},
 	},
 	"rcarriga/nvim-notify",
 	{
@@ -73,7 +65,6 @@ require("lazy").setup({
 	'hrsh7th/cmp-vsnip',
 	'hrsh7th/vim-vsnip',
 	"neovim/nvim-lspconfig",
-
 	{
 		"terrortylor/nvim-comment",
 		config = function()
