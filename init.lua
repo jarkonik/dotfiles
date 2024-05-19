@@ -121,7 +121,15 @@ require("lazy").setup({
 	},
 	{
 		'nvim-lualine/lualine.nvim',
-		opts = {},
+		opts = {
+			sections = {
+				lualine_c = {
+					function()
+						return require('lsp-progress').progress()
+					end,
+				},
+			}
+		},
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
 	{
@@ -156,7 +164,11 @@ require("lazy").setup({
 	"dstein64/nvim-scrollview",
 	"sindrets/diffview.nvim",
 	'nvim-lua/plenary.nvim',
-	'nvim-pack/nvim-spectre'
+	'nvim-pack/nvim-spectre',
+	{
+		'linrongbin16/lsp-progress.nvim',
+		opts = {}
+	}
 })
 
 require 'nvim-treesitter.configs'.setup({
