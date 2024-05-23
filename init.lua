@@ -168,7 +168,8 @@ require("lazy").setup({
 	{
 		'linrongbin16/lsp-progress.nvim',
 		opts = {}
-	}
+	},
+	{ "cappyzawa/trim.nvim", opts = {} },
 })
 
 require 'nvim-treesitter.configs'.setup({
