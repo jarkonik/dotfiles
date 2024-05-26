@@ -331,14 +331,14 @@ vim.api.nvim_create_autocmd('BufEnter', {
 })
 
 vim.api.nvim_create_autocmd('BufEnter', {
-	pattern = { "/home/jaroslaw/notes/**" },
+	pattern = { "*/notes/**" },
 	callback = function()
 		vim.loop.spawn("git", { args = { "pull" } })
 	end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
-	pattern = { "/home/jaroslaw/notes/**" },
+	pattern = { "*/notes/**" },
 	callback = function()
 		local filename = vim.fn.expand('%')
 		local command = 'git add ' .. filename .. '; git commit -m "Auto-commit: saved ' .. filename .. '"'
