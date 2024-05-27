@@ -10,6 +10,7 @@ if not vim.loop.fs_stat(lazypath) then
 	})
 end
 
+vim.opt.autoread = true
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.opt.termguicolors = true
