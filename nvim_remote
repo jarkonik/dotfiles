@@ -15,10 +15,10 @@ relative_file_path=$path
 
 servername=/tmp/nvr$(echo $main_module_repo_path | tr "/" "_")
 
-if [ -n "$relative_file_path" ]; then
+if [ -f "$relative_file_path" ]; then
 	nvr -s --servername $servername $line "$relative_file_path"
-elif [ -n "$repo_relative_file_path" ]; then
+elif [ -f "$repo_relative_file_path" ]; then
 	nvr -s --servername $servername $line "$repo_relative_file_path"
-elif [ -n "$main_module_relative_file_path" ]; then
+elif [ -f "$main_module_relative_file_path" ]; then
  	nvr -s --servername $servername $line "$main_module_relative_file_path"
 fi
