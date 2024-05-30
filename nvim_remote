@@ -4,15 +4,19 @@ line=$(cut -d " " -f 1 <<< $@)
 path=$(cut -d " " -f 2 <<< $@)
 
 main_module_repo_path=$(git rev-parse --show-superproject-working-tree 2>/dev/null)
+repo_path=$(git rev-parse --show-toplevel 2>/dev/null)
+if [[ -z "$main_module_repo_path" ]]; then
+	main_module_repo_path=$repo_path
+fi
 
 main_module_relative_file_path=$main_module_repo_path/$path
-repo_relative_file_path=$(git rev-parse --show-toplevel 2>/dev/null)/$path
+repo_relative_file_path=/$path
 relative_file_path=$path
 
 servername=/tmp/nvr$(echo $main_module_repo_path | tr "/" "_")
 
-if [ -n "$relative_path" ]; then
-	nvr -s --servername $servername $line "$relative_path"
+if [ -n "$relative_file_path" ]; then
+	nvr -s --servername $servername $line "$relative_file_path"
 elif [ -n "$repo_relative_file_path" ]; then
 	nvr -s --servername $servername $line "$repo_relative_file_path"
 elif [ -n "$main_module_relative_file_path" ]; then
