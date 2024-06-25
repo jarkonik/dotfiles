@@ -304,7 +304,7 @@ cmp.setup({
 
 require('lspconfig').basedpyright.setup {}
 require('lspconfig').lua_ls.setup({})
-require("lspconfig").pyright.setup({})
+-- require("lspconfig").pyright.setup({})
 vim.api.nvim_create_autocmd('BufWritePre', {
 	callback = function()
 		vim.lsp.buf.format()
