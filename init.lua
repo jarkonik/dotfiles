@@ -303,7 +303,29 @@ cmp.setup({
 })
 
 require('lspconfig').basedpyright.setup {}
-require('lspconfig').lua_ls.setup({})
+require 'lspconfig'.lua_ls.setup {
+	on_init = function(client)
+		local path = client.workspace_folders[1].name
+		if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+			return
+		end
+
+		client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+			runtime = {
+				version = 'LuaJIT'
+			},
+			workspace = {
+				checkThirdParty = false,
+				library = {
+					vim.env.VIMRUNTIME
+				}
+			}
+		})
+	end,
+	settings = {
+		Lua = {}
+	}
+}
 -- require("lspconfig").pyright.setup({})
 vim.api.nvim_create_autocmd('BufWritePre', {
 	callback = function()
@@ -385,7 +407,8 @@ vim.api.nvim_set_hl(0, 'DapLogPoint', { ctermbg = 0, fg = '#61afef', bg = '#3135
 vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#98c379', bg = '#31353f' })
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<C-A-p>', builtin.commands, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
