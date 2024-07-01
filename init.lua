@@ -81,7 +81,21 @@ require("lazy").setup({
 		end
 
 	},
-	{ 'akinsho/bufferline.nvim',         version = "*",      dependencies = 'nvim-tree/nvim-web-devicons', opts = {} },
+	{
+		'romgrk/barbar.nvim',
+		dependencies = {
+			'lewis6991/gitsigns.nvim',
+			'nvim-tree/nvim-web-devicons',
+		},
+		init = function() vim.g.barbar_auto_setup = false end,
+		opts = {
+			no_name_title = "unnamed",
+			icons = {
+				pinned = { button = '', filename = true },
+			}
+		},
+		version = '^1.0.0',
+	},
 	{
 		"kylechui/nvim-surround",
 		version = "*",
@@ -178,7 +192,7 @@ require("lazy").setup({
 			vim.cmd.colorscheme "catppuccin-mocha"
 		end
 	},
-	{ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
+	{ "rcarriga/nvim-dap-ui",            dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
 	{
 		'mrcjkb/rustaceanvim',
 		version = '^4',
@@ -212,7 +226,7 @@ require("lazy").setup({
 		'linrongbin16/lsp-progress.nvim',
 		opts = {}
 	},
-	{ "cappyzawa/trim.nvim",  opts = {} },
+	{ "cappyzawa/trim.nvim", opts = {} },
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
@@ -408,6 +422,17 @@ vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
 	{ silent = true, desc = "re-evaluate cell" })
 vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
 	{ silent = true, desc = "evaluate visual selection" })
+
+local opts = { noremap = true, silent = true }
+local map = vim.api.nvim_set_keymap
+map('n', '<leader>bdo', "<Cmd>BufferCloseAllButCurrentOrPinned<CR>", opts);
+map('n', '<leader>bp', '<Cmd>BufferPin<CR>', opts)
+map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+map('n', '<A-n>', '<Cmd>BufferMovePrevious<CR>', opts)
+map('n', '<A-m>', '<Cmd>BufferMoveNext<CR>', opts)
+map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
+map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
 
 vim.keymap.set('n', '<leader>fg', '<cmd>lua require("spectre").toggle()<CR>', {
 	desc = "Toggle Spectre"
