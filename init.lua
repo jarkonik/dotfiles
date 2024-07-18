@@ -35,6 +35,12 @@ if vim.g.vscode then
 				require("nvim_comment").setup()
 			end
 		},
+		{
+			"kylechui/nvim-surround",
+			version = "*",
+			event = "VeryLazy",
+			opts = {}
+		},
 	})
 	local vscode = require('vscode')
 
