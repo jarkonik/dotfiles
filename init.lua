@@ -115,21 +115,6 @@ require("lazy").setup({
 
 	},
 	{
-		'romgrk/barbar.nvim',
-		dependencies = {
-			'lewis6991/gitsigns.nvim',
-			'nvim-tree/nvim-web-devicons',
-		},
-		init = function() vim.g.barbar_auto_setup = false end,
-		opts = {
-			no_name_title = "unnamed",
-			icons = {
-				pinned = { button = '', filename = true },
-			}
-		},
-		version = '^1.0.0',
-	},
-	{
 		"kylechui/nvim-surround",
 		version = "*",
 		event = "VeryLazy",
@@ -139,6 +124,17 @@ require("lazy").setup({
 		'nvim-telescope/telescope.nvim',
 		tag = '0.1.6',
 		dependencies = { 'nvim-lua/plenary.nvim' }
+	},
+	{
+		"folke/zen-mode.nvim",
+		opts = {
+			window = {
+				options = {
+					signcolumn = "no",
+					number = false,
+				}
+			}
+		}
 	},
 	{
 		"lewis6991/gitsigns.nvim",
@@ -442,7 +438,7 @@ vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#98c379', bg = '#31353
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<C-p>', builtin.find_files, {})
 vim.keymap.set('n', '<C-A-p>', builtin.commands, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader><leader>', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
@@ -481,6 +477,14 @@ vim.api.nvim_create_autocmd('BufEnter', {
 		vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
 	end,
 })
+
+vim.api.nvim_create_autocmd('BufEnter', {
+	pattern = { "*.md" },
+	callback = function()
+		vim.opt.textwidth = 80
+	end,
+})
+
 
 vim.api.nvim_create_autocmd('BufEnter', {
 	pattern = { "*/notes/**" },
