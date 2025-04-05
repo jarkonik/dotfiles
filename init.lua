@@ -229,11 +229,9 @@ require("lazy").setup({
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000,
+		"rebelot/kanagawa.nvim",
 		config = function()
-			vim.cmd.colorscheme "catppuccin-mocha"
+			vim.cmd.colorscheme "kanagawa"
 		end
 	},
 	{ "rcarriga/nvim-dap-ui",            dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
