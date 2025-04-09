@@ -475,6 +475,7 @@ map('n', '<A-n>', '<Cmd>BufferMovePrevious<CR>', opts)
 map('n', '<A-m>', '<Cmd>BufferMoveNext<CR>', opts)
 map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
+map('t', '<Esc>', '<C-\\><C-n>', opts)
 
 vim.keymap.set('n', '<leader>fg', '<cmd>lua require("spectre").toggle()<CR>', {
 	desc = "Toggle Spectre"
