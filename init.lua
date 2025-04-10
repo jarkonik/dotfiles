@@ -1,3 +1,6 @@
+-------------------------------------------------------------------------------
+-- Bootstrap
+-------------------------------------------------------------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -10,6 +13,9 @@ if not vim.loop.fs_stat(lazypath) then
 	})
 end
 
+-------------------------------------------------------------------------------
+-- Basic settings
+-------------------------------------------------------------------------------
 vim.opt.autoread = true
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
@@ -27,6 +33,9 @@ vim.opt.wrap = false
 vim.opt.title = true
 vim.opt.titlestring = [[%{fnamemodify(getcwd(), ':t')}]]
 
+-------------------------------------------------------------------------------
+-- VSCode
+-------------------------------------------------------------------------------
 if vim.g.vscode then
 	require("lazy").setup({
 		{
@@ -72,6 +81,9 @@ if vim.g.vscode then
 	return
 end
 
+-------------------------------------------------------------------------------
+-- Plugins
+-------------------------------------------------------------------------------
 require("lazy").setup({
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{
@@ -142,17 +154,12 @@ require("lazy").setup({
 	{
 		'romgrk/barbar.nvim',
 		dependencies = {
-			'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-			'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+			'lewis6991/gitsigns.nvim',
+			'nvim-tree/nvim-web-devicons',
 		},
 		init = function() vim.g.barbar_auto_setup = false end,
-		opts = {
-			-- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-			-- animation = true,
-			-- insert_at_start = true,
-			-- …etc.
-		},
-		version = '^1.0.0', -- optional: only update when a new 1.x version is released
+		opts = {},
+		version = '^1.0.0',
 	},
 	{
 		"folke/zen-mode.nvim",
