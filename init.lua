@@ -100,6 +100,7 @@ require("lazy").setup({
 	'hrsh7th/cmp-vsnip',
 	'hrsh7th/vim-vsnip',
 	"neovim/nvim-lspconfig",
+	"nvimtools/none-ls.nvim",
 	{
 		"terrortylor/nvim-comment",
 		config = function()
@@ -123,7 +124,20 @@ require("lazy").setup({
 	{
 		'nvim-telescope/telescope.nvim',
 		tag = '0.1.6',
-		dependencies = { 'nvim-lua/plenary.nvim' }
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			{
+
+				"isak102/telescope-git-file-history.nvim",
+				dependencies = {
+					"nvim-lua/plenary.nvim",
+					"tpope/vim-fugitive"
+				}
+			},
+			config = function()
+				require("telescope").load_extension("git_file_history")
+			end
+		}
 	},
 	{
 		'romgrk/barbar.nvim',
@@ -344,6 +358,9 @@ cmp.setup({
 	})
 })
 
+require('lspconfig').ruby_lsp.setup {}
+require('lspconfig').ts_ls.setup {}
+require('lspconfig').gopls.setup {}
 require('lspconfig').basedpyright.setup {}
 require 'lspconfig'.lua_ls.setup {
 	on_init = function(client)
@@ -371,7 +388,12 @@ require 'lspconfig'.lua_ls.setup {
 -- require("lspconfig").pyright.setup({})
 vim.api.nvim_create_autocmd('BufWritePre', {
 	callback = function()
-		vim.lsp.buf.format()
+		vim.lsp.buf.format({
+			filter = function(client)
+				-- apply whatever logic you want (in this example, we'll only use null-ls)
+				return client.name ~= "ts_ls"
+			end,
+		})
 	end,
 })
 require('lspconfig').ruff.setup {
@@ -477,6 +499,12 @@ map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
 map('t', '<Esc>', '<C-\\><C-n>', opts)
 
+local null_ls = require("null-ls")
+local sources = {
+	null_ls.builtins.formatting.prettier,
+}
+null_ls.setup({ sources = sources })
+
 vim.keymap.set('n', '<leader>fg', '<cmd>lua require("spectre").toggle()<CR>', {
 	desc = "Toggle Spectre"
 })
@@ -516,3 +544,4 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 		vim.loop.spawn("git", { args = { "push" } })
 	end
 })
+
