@@ -248,7 +248,10 @@ require("lazy").setup({
 			vim.cmd.colorscheme "kanagawa"
 		end
 	},
-	{ "rcarriga/nvim-dap-ui",            dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
+	},
 	{
 		'mrcjkb/rustaceanvim',
 		version = '^4',
@@ -282,7 +285,7 @@ require("lazy").setup({
 		'linrongbin16/lsp-progress.nvim',
 		opts = {}
 	},
-	{ "cappyzawa/trim.nvim", opts = {} },
+	{ "cappyzawa/trim.nvim",             opts = {} },
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
@@ -302,27 +305,11 @@ require("lazy").setup({
 			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
 		}
 	},
-	{
-		"kdheepak/lazygit.nvim",
-		cmd = {
-			"LazyGit",
-			"LazyGitConfig",
-			"LazyGitCurrentFile",
-			"LazyGitFilter",
-			"LazyGitFilterCurrentFile",
-		},
-		-- optional for floating window border decoration
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		-- setting the keybinding for LazyGit with 'keys' is recommended in
-		-- order to load the plugin when the command is run for the first time
-		keys = {
-			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-		}
-	}
 })
 
+-------------------------------------------------------------------------------
+-- Treesitter
+-------------------------------------------------------------------------------
 require 'nvim-treesitter.configs'.setup({
 	ensure_installed = {},
 	auto_install = true,
@@ -334,6 +321,9 @@ require 'nvim-treesitter.configs'.setup({
 	modules = {}
 })
 
+-------------------------------------------------------------------------------
+-- Autocomplete
+-------------------------------------------------------------------------------
 local cmp = require('cmp')
 cmp.setup({
 	snippet = {
@@ -358,55 +348,9 @@ cmp.setup({
 	})
 })
 
-require('lspconfig').ruby_lsp.setup {}
-require('lspconfig').ts_ls.setup {}
-require('lspconfig').gopls.setup {}
-require('lspconfig').basedpyright.setup {}
-require 'lspconfig'.lua_ls.setup {
-	on_init = function(client)
-		local path = client.workspace_folders[1].name
-		if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
-			return
-		end
-
-		client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-			runtime = {
-				version = 'LuaJIT'
-			},
-			workspace = {
-				checkThirdParty = false,
-				library = {
-					vim.env.VIMRUNTIME
-				}
-			}
-		})
-	end,
-	settings = {
-		Lua = {}
-	}
-}
--- require("lspconfig").pyright.setup({})
-vim.api.nvim_create_autocmd('BufWritePre', {
-	callback = function()
-		vim.lsp.buf.format({
-			filter = function(client)
-				-- apply whatever logic you want (in this example, we'll only use null-ls)
-				return client.name ~= "ts_ls"
-			end,
-		})
-	end,
-})
-require('lspconfig').ruff.setup {
-	on_attach = function(client)
-		client.server_capabilities.hoverProvider = false
-	end,
-	init_options = {
-		settings = {
-			args = {},
-		}
-	}
-}
-require 'lspconfig'.gdscript.setup {}
+-------------------------------------------------------------------------------
+-- LSP
+-------------------------------------------------------------------------------
 local on_attach = function(bufnr)
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
@@ -441,6 +385,66 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+-------------------------------------------------------------------------------
+-- LSP Sources
+-------------------------------------------------------------------------------
+local null_ls = require("null-ls")
+local sources = {
+	null_ls.builtins.formatting.prettier,
+}
+null_ls.setup({ sources = sources })
+require('lspconfig').ruby_lsp.setup {}
+require('lspconfig').ts_ls.setup {}
+require('lspconfig').gopls.setup {}
+require('lspconfig').basedpyright.setup {}
+require 'lspconfig'.lua_ls.setup {
+	on_init = function(client)
+		local path = client.workspace_folders[1].name
+		if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+			return
+		end
+
+		client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+			runtime = {
+				version = 'LuaJIT'
+			},
+			workspace = {
+				checkThirdParty = false,
+				library = {
+					vim.env.VIMRUNTIME
+				}
+			}
+		})
+	end,
+	settings = {
+		Lua = {}
+	}
+}
+vim.api.nvim_create_autocmd('BufWritePre', {
+	callback = function()
+		vim.lsp.buf.format({
+			filter = function(client)
+				-- apply whatever logic you want (in this example, we'll only use null-ls)
+				return client.name ~= "ts_ls"
+			end,
+		})
+	end,
+})
+require('lspconfig').ruff.setup {
+	on_attach = function(client)
+		client.server_capabilities.hoverProvider = false
+	end,
+	init_options = {
+		settings = {
+			args = {},
+		}
+	}
+}
+require 'lspconfig'.gdscript.setup {}
+
+-------------------------------------------------------------------------------
+-- Debugging
+-------------------------------------------------------------------------------
 local dap = require('dap')
 dap.adapters.lldb = {
 	type = 'executable',
@@ -470,23 +474,9 @@ vim.api.nvim_set_hl(0, 'DapBreakpoint', { ctermbg = 0, fg = '#993939', bg = '#31
 vim.api.nvim_set_hl(0, 'DapLogPoint', { ctermbg = 0, fg = '#61afef', bg = '#31353f' })
 vim.api.nvim_set_hl(0, 'DapStopped', { ctermbg = 0, fg = '#98c379', bg = '#31353f' })
 
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<C-p>', builtin.find_files, {})
-vim.keymap.set('n', '<C-A-p>', builtin.commands, {})
-vim.keymap.set('n', '<leader><leader>', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-
-vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
-	{ silent = true, desc = "Initialize the plugin" })
-vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>",
-	{ silent = true, desc = "run operator selection" })
-vim.keymap.set("n", "<leader>rl", ":MoltenEvaluateLine<CR>",
-	{ silent = true, desc = "evaluate line" })
-vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
-	{ silent = true, desc = "re-evaluate cell" })
-vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
-	{ silent = true, desc = "evaluate visual selection" })
-
+-------------------------------------------------------------------------------
+-- Bindings
+-------------------------------------------------------------------------------
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap
 map('n', '<leader>bdo', "<Cmd>BufferCloseAllButCurrentOrPinned<CR>", opts);
@@ -499,20 +489,42 @@ map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
 map('t', '<Esc>', '<C-\\><C-n>', opts)
 
-local null_ls = require("null-ls")
-local sources = {
-	null_ls.builtins.formatting.prettier,
-}
-null_ls.setup({ sources = sources })
+-------------------------------------------------------------------------------
+-- Eval
+-------------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>mi", ":MoltenInit<CR>",
+	{ silent = true, desc = "Initialize the plugin" })
+vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>",
+	{ silent = true, desc = "run operator selection" })
+vim.keymap.set("n", "<leader>rl", ":MoltenEvaluateLine<CR>",
+	{ silent = true, desc = "evaluate line" })
+vim.keymap.set("n", "<leader>rr", ":MoltenReevaluateCell<CR>",
+	{ silent = true, desc = "re-evaluate cell" })
+vim.keymap.set("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>gv",
+	{ silent = true, desc = "evaluate visual selection" })
 
+-------------------------------------------------------------------------------
+-- Telescope
+-------------------------------------------------------------------------------
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<C-A-p>', builtin.commands, {})
+vim.keymap.set('n', '<leader><leader>', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+-------------------------------------------------------------------------------
+-- Search
+-------------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>fg', '<cmd>lua require("spectre").toggle()<CR>', {
 	desc = "Toggle Spectre"
 })
-
 vim.keymap.set('n', '<leader>bf', function()
 	print(vim.api.nvim_buf_get_name(0))
 end)
 
+-------------------------------------------------------------------------------
+-- Godot
+-------------------------------------------------------------------------------
 vim.api.nvim_create_autocmd('BufEnter', {
 	pattern = { "*.gd" },
 	callback = function()
@@ -520,6 +532,9 @@ vim.api.nvim_create_autocmd('BufEnter', {
 	end,
 })
 
+-------------------------------------------------------------------------------
+-- Markdown
+-------------------------------------------------------------------------------
 vim.api.nvim_create_autocmd('BufEnter', {
 	pattern = { "*.md" },
 	callback = function()
@@ -527,14 +542,15 @@ vim.api.nvim_create_autocmd('BufEnter', {
 	end,
 })
 
-
+-------------------------------------------------------------------------------
+-- Notes
+-------------------------------------------------------------------------------
 vim.api.nvim_create_autocmd('BufEnter', {
 	pattern = { "*/notes/**" },
 	callback = function()
 		vim.loop.spawn("git", { args = { "pull" } })
 	end,
 })
-
 vim.api.nvim_create_autocmd('BufWritePost', {
 	pattern = { "*/notes/**" },
 	callback = function()
@@ -544,4 +560,3 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 		vim.loop.spawn("git", { args = { "push" } })
 	end
 })
-
