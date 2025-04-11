@@ -1,3 +1,8 @@
+[general]
+import = [
+    "~/src/dotfiles/alacritty-theme/themes/kanagawa_wave.toml"
+]
+
 [font]
 size = 12
 
@@ -16,3 +21,6 @@ style = "Italic"
 [font.normal]
 family = "FiraCode Nerd Font"
 style = "Regular"
+
+[window]
+opacity = 0.97

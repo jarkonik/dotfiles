@@ -323,6 +323,11 @@ require("lazy").setup({
 			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
 		}
 	},
+	{
+		'tribela/transparent.nvim',
+		event = 'VimEnter',
+		config = true,
+	}
 })
 
 -------------------------------------------------------------------------------
