@@ -147,6 +147,7 @@ require("lazy").setup({
 		opts = {},
 		init = function()
 			vim.keymap.set('n', '<leader>tt', require("nvim-tree.api").tree.toggle)
+			vim.keymap.set('n', '<leader>tf', require("nvim-tree.api").tree.find_file)
 		end
 
 	},
