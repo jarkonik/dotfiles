@@ -14,4 +14,4 @@ nvr_git () {
 		/usr/bin/nvim "$@"
 	fi
 }
-nvr_git
+nvr_git $@
