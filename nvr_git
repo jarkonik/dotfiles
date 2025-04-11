@@ -1,3 +1,5 @@
+#!/bin/bash
+
 nvr_git () {
 	local main_module_repo_path=$(git rev-parse --show-superproject-working-tree 2>/dev/null)
 	local repo_path=$(git rev-parse --show-toplevel 2>/dev/null)
@@ -12,4 +14,4 @@ nvr_git () {
 		/usr/bin/nvim "$@"
 	fi
 }
-nvr_git()
+nvr_git
