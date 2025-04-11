@@ -32,6 +32,17 @@ vim.opt.shortmess:append("sI")
 vim.opt.wrap = false
 vim.opt.title = true
 vim.opt.titlestring = [[%{fnamemodify(getcwd(), ':t')}]]
+vim.g.clipboard = {
+	name = 'OSC 52',
+	copy = {
+		['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+		['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+	},
+	paste = {
+		['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+		['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+	},
+}
 
 -------------------------------------------------------------------------------
 -- VSCode
@@ -567,3 +578,4 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 		vim.loop.spawn("git", { args = { "push" } })
 	end
 })
+

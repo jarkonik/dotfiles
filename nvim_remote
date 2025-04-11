@@ -1,7 +1,8 @@
 #!/bin/bash
 
-line=$(cut -d " " -f 1 <<< $@)
-path=$(cut -d " " -f 2 <<< $@)
+IFS=':' read -a args <<< "$1"
+path=${args[0]}
+line=${args[1]}
 
 main_module_repo_path=$(git rev-parse --show-superproject-working-tree 2>/dev/null)
 repo_path=$(git rev-parse --show-toplevel 2>/dev/null)
@@ -16,9 +17,9 @@ relative_file_path=$path
 servername=/tmp/nvr$(echo $main_module_repo_path | tr "/" "_")
 
 if [ -f "$relative_file_path" ]; then
-	nvr -s --servername $servername $line "$relative_file_path"
+	nvr -s --servername $servername +$line "$relative_file_path"
 elif [ -f "$repo_relative_file_path" ]; then
-	nvr -s --servername $servername $line "$repo_relative_file_path"
+	nvr -s --servername $servername +$line "$repo_relative_file_path"
 elif [ -f "$main_module_relative_file_path" ]; then
- 	nvr -s --servername $servername $line "$main_module_relative_file_path"
+	nvr -s --servername $servername +$line "$main_module_relative_file_path"
 fi
