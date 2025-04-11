@@ -21,6 +21,3 @@ style = "Italic"
 [font.normal]
 family = "FiraCode Nerd Font"
 style = "Regular"
-
-[window]
-opacity = 0.97
