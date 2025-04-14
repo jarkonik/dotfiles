@@ -1,6 +1,6 @@
 [general]
 import = [
-    "~/src/dotfiles/alacritty-theme/themes/gruvbox_darker.toml"
+    "~/src/dotfiles/alacritty-theme/themes/kanagawa_dragon.toml"
 ]
 
 [font]
