@@ -3,3 +3,4 @@ theme = Kanagawa Dragon
 mouse-hide-while-typing = true
 minimum-contrast = 1.1
 font-size = 14
+command = /usr/local/bin/tmux
