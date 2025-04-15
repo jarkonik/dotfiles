@@ -486,6 +486,7 @@ local sources = {
 	null_ls.builtins.formatting.prettier,
 }
 null_ls.setup({ sources = sources })
+require('lspconfig').clangd.setup {}
 require('lspconfig').ruby_lsp.setup {}
 require('lspconfig').ts_ls.setup {}
 require('lspconfig').gopls.setup {}
