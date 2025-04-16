@@ -5,4 +5,5 @@ export PATH="$PATH:$HOME/.cargo/bin"
 eval "$(starship init bash)"
 alias export_esp=". /home/jaroslaw/bin/export-esp.sh"
 alias get_idf='. $HOME/src/esp/esp-idf/export.sh'
+export PATH=$PATH:~/bin/zig
 export WGPU_BACKEND=opengl

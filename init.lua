@@ -487,6 +487,7 @@ local sources = {
 }
 null_ls.setup({ sources = sources })
 require('lspconfig').clangd.setup {}
+require('lspconfig').zls.setup {}
 require('lspconfig').ruby_lsp.setup {}
 require('lspconfig').ts_ls.setup {}
 require('lspconfig').gopls.setup {}
@@ -514,6 +515,22 @@ require 'lspconfig'.lua_ls.setup {
 		Lua = {}
 	}
 }
+vim.api.nvim_create_autocmd('BufWritePre', {
+	pattern = { "*.zig" },
+	callback = function()
+		local orignal = vim.notify
+		vim.notify = function(msg, level, opts)
+			if msg == 'No code actions available' then
+				return
+			end
+			orignal(msg, level, opts)
+		end
+		vim.lsp.buf.code_action({
+			context = { only = { "source.fixAll" } },
+			apply = true,
+		})
+	end
+})
 vim.api.nvim_create_autocmd('BufWritePre', {
 	callback = function()
 		vim.lsp.buf.format({
