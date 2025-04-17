@@ -45,54 +45,6 @@ vim.g.clipboard = {
 }
 
 -------------------------------------------------------------------------------
--- VSCode
--------------------------------------------------------------------------------
-if vim.g.vscode then
-	require("lazy").setup({
-		{
-			"terrortylor/nvim-comment",
-			config = function()
-				require("nvim_comment").setup()
-			end
-		},
-		{
-			"kylechui/nvim-surround",
-			version = "*",
-			event = "VeryLazy",
-			opts = {}
-		},
-	})
-	local vscode = require('vscode')
-
-	local opts = { noremap = true, silent = true }
-	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-	vim.keymap.set('n', 'gd', function()
-		vscode.call("editor.action.revealDefinition")
-	end, opts)
-	vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-	vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-	vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-	vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-	vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-	vim.keymap.set('n', '<leader>wl', function()
-		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, opts)
-	vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-	vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-	vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-	vim.keymap.set('n', '<leader>k', vim.diagnostic.open_float, opts)
-	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-	vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
-	vim.keymap.set('n', '<leader>ca', function()
-		vscode.call("editor.action.quickFix")
-	end
-	, opts)
-
-	return
-end
-
--------------------------------------------------------------------------------
 -- Plugins
 -------------------------------------------------------------------------------
 require("lazy").setup({
@@ -143,12 +95,6 @@ require("lazy").setup({
 			"ibhagwan/fzf-lua", -- optional
 			"echasnovski/mini.pick", -- optional
 		},
-	},
-	{
-		"terrortylor/nvim-comment",
-		config = function()
-			require("nvim_comment").setup()
-		end
 	},
 	{
 		"nvim-tree/nvim-tree.lua",
