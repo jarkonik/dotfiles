@@ -618,3 +618,12 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 		vim.loop.spawn("git", { args = { "push" } })
 	end
 })
+
+-------------------------------------------------------------------------------
+-- Comments
+-------------------------------------------------------------------------------
+vim.api.nvim_create_autocmd('BufEnter', {
+	callback = function()
+		vim.opt.formatoptions:remove("o")
+	end,
+})
