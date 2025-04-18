@@ -32,6 +32,7 @@ vim.opt.shortmess:append("sI")
 vim.opt.wrap = false
 vim.opt.title = true
 vim.opt.titlestring = [[%{fnamemodify(getcwd(), ':t')}]]
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 vim.g.clipboard = {
 	name = 'OSC 52',
 	copy = {
