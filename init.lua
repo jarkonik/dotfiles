@@ -58,6 +58,14 @@ require("lazy").setup({
 		end,
 	},
 	{
+		'rmagatti/auto-session',
+		lazy = false,
+		---@module "auto-session"
+		---@type AutoSession.Config
+		opts = {
+		}
+	},
+	{
 		"williamboman/mason.nvim",
 		opts = {}
 	},
