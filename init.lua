@@ -125,17 +125,6 @@ require("lazy").setup({
 		tag = '0.1.6',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
-			{
-
-				"isak102/telescope-git-file-history.nvim",
-				dependencies = {
-					"nvim-lua/plenary.nvim",
-					"tpope/vim-fugitive"
-				}
-			},
-			config = function()
-				require("telescope").load_extension("git_file_history")
-			end
 		}
 	},
 	{
@@ -192,88 +181,6 @@ require("lazy").setup({
 						gitsigns.nav_hunk('prev')
 					end
 				end)
-
-				-- Actions
-				local wk = require("which-key")
-
-				wk.add({
-					{
-
-						'<leader>h',
-						group = "hunks",
-						mode = "n",
-						{
-							{ '<leader>hs', gitsigns.stage_hunk, desc = "Stage Hunk" },
-							{ '<leader>hr', gitsigns.reset_hunk, desc = "Reset Hunk" },
-							{
-								'<leader>hS',
-								gitsigns.stage_buffer,
-								desc = "Stage Buffer"
-							},
-							{
-								'<leader>hu',
-								gitsigns.undo_stage_hunk,
-								desc = "Undo Stage Hunk"
-							},
-							{
-								'<leader>hR',
-								gitsigns.reset_buffer,
-								desc = "Reset Buffer"
-							},
-							{
-								'<leader>hp',
-								gitsigns.preview_hunk,
-								desc = "Preview Hunk"
-							},
-							{
-								'<leader>hb',
-								function() gitsigns.blame_line { full = true } end,
-								desc = "Blame line"
-							},
-							{
-								'<leader>tb',
-								gitsigns.toggle_current_line_blame,
-								desc = "Toggle current line blame"
-							},
-							{
-								'<leader>hd',
-								gitsigns.diffthis,
-								desc = "Diff this"
-							},
-							{
-								'<leader>hD',
-								function() gitsigns.diffthis('~') end,
-								desc = "Diff this ~"
-							},
-							{
-								'<leader>ht',
-								gitsigns.toggle_deleted,
-								desc = "Toggle deleted"
-							},
-						},
-					},
-					{
-						'<leader>h',
-						group = "vhunks",
-						mode = "v",
-						{
-							'<leader>hs',
-							function()
-								gitsigns.stage_hunk { vim.fn.line('.'),
-									vim.fn.line('v') }
-							end,
-							desc = "Stage Hunk",
-						},
-						{
-							'<leader>hr',
-							function()
-								gitsigns.reset_hunk { vim.fn.line('.'),
-									vim.fn.line('v') }
-							end,
-							desc = "Reset Hunk",
-						},
-					}
-				})
 
 				-- Text object
 				map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
@@ -553,6 +460,98 @@ map('n', '<A-n>', '<Cmd>BufferMovePrevious<CR>', opts)
 map('n', '<A-m>', '<Cmd>BufferMoveNext<CR>', opts)
 map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
+map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
+map('n', '<A-p>', '<Cmd>BufferPick<CR>', opts)
+local neogit = require('neogit')
+local wk = require("which-key")
+local gitsigns = require('gitsigns')
+wk.add(
+	{
+		{
+
+			'<leader>g',
+			group = "git",
+			mode = "n",
+			{
+				{
+					'<leader>gg',
+					function()
+						neogit.open({ kind = "split" })
+					end,
+					desc = "Neogit"
+				},
+				{ '<leader>gs', gitsigns.stage_hunk, desc = "Stage Hunk" },
+				{ '<leader>gr', gitsigns.reset_hunk, desc = "Reset Hunk" },
+				{
+					'<leader>gS',
+					gitsigns.stage_buffer,
+					desc = "Stage Buffer"
+				},
+				{
+					'<leader>gu',
+					gitsigns.undo_stage_hunk,
+					desc = "Undo Stage Hunk"
+				},
+				{
+					'<leader>gR',
+					gitsigns.reset_buffer,
+					desc = "Reset Buffer"
+				},
+				{
+					'<leader>gp',
+					gitsigns.preview_hunk,
+					desc = "Preview Hunk"
+				},
+				{
+					'<leader>gb',
+					function() gitsigns.blame_line { full = true } end,
+					desc = "Blame line"
+				},
+				{
+					'<leader>gy',
+					gitsigns.toggle_current_line_blame,
+					desc = "Toggle current line blame"
+				},
+				{
+					'<leader>gd',
+					gitsigns.diffthis,
+					desc = "Diff this"
+				},
+				{
+					'<leader>gD',
+					function() gitsigns.diffthis('~') end,
+					desc = "Diff this ~"
+				},
+				{
+					'<leader>gt',
+					gitsigns.toggle_deleted,
+					desc = "Toggle deleted"
+				},
+			},
+			{
+				'<leader>g',
+				group = "vgit",
+				mode = "v",
+				{
+					'<leader>gs',
+					function()
+						gitsigns.stage_hunk { vim.fn.line('.'),
+							vim.fn.line('v') }
+					end,
+					desc = "Stage Hunk",
+				},
+				{
+					'<leader>gr',
+					function()
+						gitsigns.reset_hunk { vim.fn.line('.'),
+							vim.fn.line('v') }
+					end,
+					desc = "Reset Hunk",
+				},
+			}
+		} }
+)
+
 
 -------------------------------------------------------------------------------
 -- Eval
@@ -577,7 +576,6 @@ vim.keymap.set('n', '<C-p>', builtin.find_files, {})
 vim.keymap.set('n', '<C-A-p>', builtin.commands, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-vim.keymap.set('n', '<leader>gh', telescope.extensions.git_file_history.git_file_history, {})
 
 -------------------------------------------------------------------------------
 -- Search
